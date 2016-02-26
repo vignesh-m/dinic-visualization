@@ -1,6 +1,8 @@
 """ Main driver """
 
-from gui.image_display import start_gui, ImageSequence
+from maxflow.dinic import DinicImageSequence
+from gui.image_display import start_gui
 
-imageSequence = ImageSequence()
+graph = []
+imageSequence = DinicImageSequence(graph)
 start_gui(imageSequence)

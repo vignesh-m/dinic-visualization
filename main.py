@@ -1,5 +1,6 @@
-""" Main driver"""
+""" Main driver """
 
-from gui.image_display import start_gui
+from gui.image_display import start_gui, ImageSequence
 
-start_gui()
+imageSequence = ImageSequence()
+start_gui(imageSequence)

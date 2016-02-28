@@ -23,7 +23,9 @@ def input_graph(input_file=sys.stdin):
     for i in range(m):
         u, v, c = map(int, raw_input().split())
         graph[u].append((v, c))
-    return graph
+
+    # modified to return edges also
+    return graph, m , n
 
 
 def display_graph(graph, filename="graphviz_output"):

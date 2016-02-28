@@ -1,5 +1,7 @@
 """ Implementation of Dinic's algorithm for max flow """
 from gui.image_display import ImageSequence
+import matplotlib.image as mpimg
+from graph import display_graph
 
 INF = 1000000000
 
@@ -25,7 +27,8 @@ class DinicImageSequence(ImageSequence):
 
     def init_image(self):
         # set init image
-        pass
+        display_graph(self.graph, 'dinic_output')
+        return mpimg.imread('dinic_output.png')
 
     def next_image(self):
         if self.status == 1:
@@ -34,9 +37,10 @@ class DinicImageSequence(ImageSequence):
                 self.status = 0
             return _next
         else:
-            dist = find_distances(graph, source)
-            if dist[sink] == INF:
+            dist = find_distances(self.graph, self.source)
+            if dist[self.sink] == INF:
                 self.done = True
+                return self.init_image()
             else:
                 # find blocking flow
                 self.blocking_flow = BlockingFlowImageSequence(self.graph, dist, self.source, self.sink)

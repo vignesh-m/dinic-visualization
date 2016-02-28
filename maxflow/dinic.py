@@ -23,7 +23,11 @@ class DinicImageSequence(ImageSequence):
         print "dinic with", graph
         # set init image
 
-    def next(self):
+    def init_image(self):
+        # set init image
+        pass
+
+    def next_image(self):
         if self.status == 1:
             _next = self.blocking_flow.next()
             if self.blocking_flow.complete():

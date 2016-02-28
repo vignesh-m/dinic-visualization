@@ -31,12 +31,70 @@ def blocking_flow(graph , edges,vert, source, sink):
 
     #================================================
 
-    # loop |E| times on modified DFS
+    # stores the augmenting path
 
-    # For each DFS
-    
-    # Augment path
-    # Make deletion of vertex
+    # loop |E| times on modified DFS
+    for i in range(edges):
+
+        path = []
+        path.append(source)
+        
+        min_wt = float('inf')
+
+        while True:
+
+            # if path is empty then exit and terminate the bfs
+            # since no s-t path is there
+            if len(path)==0:
+                break
+
+            # get last vertex in s-t path
+            curr = path[-1]
+
+            # Check if any vertices are adjacent to curr
+            # If yes then no s-t path exists
+            # Mark all incident edges for deletion next time they are seen
+            # Then adjacency matrix entries are all set to -1 for that vertex
+           
+            # Change to true if you find a child
+            child_exists = False
+
+
+            while ((not child_exists) and len(graph_sets[curr])!=0):
+                #get random adjacent edge to current edge
+                child = graph_sets[curr].pop()
+
+                # if valid child found
+                if adj_matrix[curr,child]!=0:
+                    child_exists =True    
+                    graph_sets[curr].add(child)
+
+
+            # if no child node found, then set curr for deletion
+            if len(graph_sets[curr])==0:
+                adj_matrix[:,curr] = 0 
+                path.pop()
+                continue
+
+            #else path augmentation:
+
+            if min_wt >  adj_matrix[curr,child]:
+                min_wt = adj_matrix[curr,child] 
+
+
+            if child == sink:
+                
+                while( len(path) > 1 ):
+                    temp1 = path.pop()
+                    temp2 = path[-1]
+                    adj_matrix[temp2,temp1] =  adj_matrix[temp2,temp1] - min_wt
+
+                break
+                
+
+
+
+
     
           
 #============Function end===========================
@@ -54,6 +112,6 @@ display_graph(test_graph)
 #assuming 0 is source and v-1 is sink
 blocking_flow(test_graph, edges,vertices, 0 ,v-1)
 
-# display_graph(test_graph,"Block_flow")
+display_graph(test_graph,"Block_flow")
 
 

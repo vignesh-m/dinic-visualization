@@ -17,15 +17,17 @@ def input_graph(input_file=sys.stdin):
     u v c (m times)
 
     line u v c refers to edge from u to v with capacity c
+
+    returns graph, vertices, edges
     """
-    n, m = map(int, raw_input().split())
+    n, m = map(int, input_file.readline().split())
     graph = [[] for _ in range(n)]
     for i in range(m):
-        u, v, c = map(int, raw_input().split())
+        u, v, c = map(int, input_file.readline().split())
         graph[u].append((v, c))
 
     # modified to return edges also
-    return graph, m , n
+    return graph, n, m
 
 
 def display_graph(graph, filename="graphviz_output"):

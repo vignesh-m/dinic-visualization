@@ -49,12 +49,3 @@ class DinicImageSequence(ImageSequence):
 
     def complete(self):
         return self.done
-
-
-class BlockingFlowImageSequence(ImageSequence):
-    """ find blocking flow from source to sink,
-        given graph and distances array
-    """
-    def __init__(self, graph, dist, source, sink):
-        ImageSequence.__init__(self)
-        print "blocking flow", graph, dist

@@ -23,6 +23,9 @@ class BlockingFlowImageSequence(ImageSequence):
         self.source = source
         self.sink = sink
 
+    def path_found(self):
+        print "path found"
+
     def blocking_flow(self):
         """
         Finds a blocking flow of graph from source to sink.
@@ -116,6 +119,7 @@ class BlockingFlowImageSequence(ImageSequence):
                 if child == sink:
                     # Decrement path weight by minimum weight along entire path
                     # and update final_graph
+                    self.path_found()
                     while len(path) > 1:
                         temp1 = path.pop()
                         temp2 = path[-1]

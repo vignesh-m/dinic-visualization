@@ -8,7 +8,11 @@ from gui.image_display import start_gui
 graph, v, e = input_graph()
 display_graph(graph)
 print graph
-b = BlockingFlowImageSequence(graph, v, e, [], 0, v - 1)
-block_graph = b.blocking_flow()
-print "blocking flow", block_graph
-display_graph(block_graph, "Block_flow")
+
+
+def blocking_flow_test():
+    b = BlockingFlowImageSequence(graph, v, e, [], 0, v - 1)
+    block_graph = b.blocking_flow()
+    print "blocking flow", block_graph
+    display_graph(block_graph, "Block_flow")
+blocking_flow_test()

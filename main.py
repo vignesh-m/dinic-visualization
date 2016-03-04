@@ -11,7 +11,7 @@ print graph
 
 
 def blocking_flow_test():
-    b = BlockingFlowImageSequence(graph, v, e, [], 0, v - 1)
+    b = DinicImageSequence(graph, v, e, 0, v - 1)
     start_gui(b)
     # block_graph = b.blocking_flow()
     # print "blocking flow", block_graph

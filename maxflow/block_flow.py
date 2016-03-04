@@ -7,6 +7,7 @@
 """
 from graph import display_graph, input_graph
 from gui.image_display import ImageSequence
+import matplotlib.image as mpimg
 import numpy as np
 
 
@@ -22,6 +23,20 @@ class BlockingFlowImageSequence(ImageSequence):
         self.dist = dist
         self.source = source
         self.sink = sink
+        self.done = False
+
+    def init_image(self):
+        display_graph(self.graph, filename="blocking_flow_init")
+        return mpimg.imread('blocking_flow_init.png')
+
+    def next_image(self):
+        block_flow = self.blocking_flow()
+        display_graph(block_flow, filename="blocking_flow_next")
+        self.done = True
+        return mpimg.imread('blocking_flow_next.png')
+
+    def complete(self):
+        return self.done
 
     def path_found(self):
         print "path found"

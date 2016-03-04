@@ -1,7 +1,9 @@
 """ Implementation of Dinic's algorithm for max flow """
 from gui.image_display import ImageSequence
+from block_flow import BlockingFlowImageSequence
 import matplotlib.image as mpimg
 from graph import display_graph
+import random
 
 INF = 1000000000
 
@@ -9,14 +11,16 @@ INF = 1000000000
 def find_distances(graph, source):
     """ Find distances using bfs """
     # TODO implement
-    return [INF for _ in graph]
+    return [random.choice([0, INF]) for _ in graph]
 
 
 class DinicImageSequence(ImageSequence):
     """ subclass image sequence """
-    def __init__(self, graph, source, sink):
+    def __init__(self, graph, nvertices, nedges, source, sink):
         ImageSequence.__init__(self)
         self.graph = graph
+        self.edges = nedges
+        self.vertices = nvertices
         self.source = source
         self.sink = sink
         self.flow = 0
@@ -27,12 +31,13 @@ class DinicImageSequence(ImageSequence):
 
     def init_image(self):
         # set init image
-        display_graph(self.graph, 'dinic_output')
-        return mpimg.imread('dinic_output.png')
+        display_graph(self.graph, 'dinic_init')
+        return mpimg.imread('dinic_init.png')
 
     def next_image(self):
         if self.status == 1:
-            _next = self.blocking_flow.next()
+            print 'in blocking flow'
+            _next = self.blocking_flow.next_image()
             if self.blocking_flow.complete():
                 self.status = 0
             return _next
@@ -40,12 +45,14 @@ class DinicImageSequence(ImageSequence):
             dist = find_distances(self.graph, self.source)
             if dist[self.sink] == INF:
                 self.done = True
+                print 'completed dinic'
                 return self.init_image()
             else:
                 # find blocking flow
-                self.blocking_flow = BlockingFlowImageSequence(self.graph, dist, self.source, self.sink)
+                print 'finding blocking flow'
+                self.blocking_flow = BlockingFlowImageSequence(self.graph, self.vertices, self.edges, dist, self.source, self.sink)
                 self.status = 1
-                return self.next()
+                return self.next_image()
 
     def complete(self):
         return self.done

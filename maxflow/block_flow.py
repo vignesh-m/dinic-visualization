@@ -44,7 +44,7 @@ class BlockingFlowImageSequence(ImageSequence):
                 self.done = True
                 return None
             print 'path', self.states[self.idx][0]
-            display_graph(self.states[self.idx][1], filename="blocking_flow_next")
+            display_graph(self.states[self.idx][1], filename="blocking_flow_next", highlight_path=self.states[self.idx][0])
             self.idx += 1
             return mpimg.imread('blocking_flow_next.png')
 

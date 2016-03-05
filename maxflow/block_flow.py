@@ -13,8 +13,11 @@ from copy import deepcopy
 
 
 class BlockingFlowImageSequence(ImageSequence):
-    """ find blocking flow from source to sink,
-        given graph and distances array
+    """ Find blocking flow from source to sink,
+        given graph and distances array.
+
+        For now, all intermediate states are computed on initialization,
+        instead of when next_image is called.
     """
     def __init__(self, graph, nvertices, nedges, dist, source, sink):
         ImageSequence.__init__(self)
@@ -59,6 +62,7 @@ class BlockingFlowImageSequence(ImageSequence):
         Finds a blocking flow of graph from source to sink.
         s - source, t - sink
         """
+        # TODO use dist array
         graph = self.graph
         vert = self.vertices
         edges = self.edges

@@ -5,14 +5,7 @@ import matplotlib.image as mpimg
 from graph import display_graph
 import random
 
-INF = 1000000000 # use double inf
-
-
-def find_distances(graph, source):
-    """ Find distances using bfs """
-    # TODO implement
-    # return [random.choice([0, INF]) for _ in graph]
-    return [0 for _ in graph]
+INF = 1000000000  # use double inf
 
 
 class DinicImageSequence(ImageSequence):
@@ -30,6 +23,12 @@ class DinicImageSequence(ImageSequence):
         print "dinic with", graph
         # set init image
 
+    def find_distances(self):
+        """ Find distances using bfs """
+        # TODO implement
+        # return [random.choice([0, INF]) for _ in graph]
+        return [0 for _ in self.graph]
+
     def init_image(self):
         # set init image
         display_graph(self.graph, 'dinic_init')
@@ -43,7 +42,7 @@ class DinicImageSequence(ImageSequence):
                 self.status = 0
             return _next
         else:
-            dist = find_distances(self.graph, self.source)
+            dist = self.find_distances()
             if dist[self.sink] == INF:
                 self.done = True
                 print 'completed dinics'

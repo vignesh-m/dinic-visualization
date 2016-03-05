@@ -9,6 +9,7 @@ from graph import display_graph, input_graph
 from gui.image_display import ImageSequence
 import matplotlib.image as mpimg
 import numpy as np
+from copy import deepcopy
 
 
 class BlockingFlowImageSequence(ImageSequence):
@@ -23,17 +24,29 @@ class BlockingFlowImageSequence(ImageSequence):
         self.dist = dist
         self.source = source
         self.sink = sink
+
         self.done = False
+        self.states = []
+        self.idx = 0
 
     def init_image(self):
         display_graph(self.graph, filename="blocking_flow_init")
+        self.block_flow = self.blocking_flow()
+        self.idx = 0
+        print 'found blockflow', self.block_flow
         return mpimg.imread('blocking_flow_init.png')
 
     def next_image(self):
-        block_flow = self.blocking_flow()
-        display_graph(block_flow, filename="blocking_flow_next")
-        self.done = True
-        return mpimg.imread('blocking_flow_next.png')
+        if self.done:
+            return None
+        else:
+            if self.idx >= len(self.states):
+                self.done = True
+                return None
+            print 'path', self.states[self.idx][0]
+            display_graph(self.states[self.idx][1], filename="blocking_flow_next")
+            self.idx += 1
+            return mpimg.imread('blocking_flow_next.png')
 
     def complete(self):
         return self.done
@@ -74,73 +87,19 @@ class BlockingFlowImageSequence(ImageSequence):
 
         # loop |E| times on modified DFS
         for i in range(edges):
-
             # TODO check if this is correct
             # exit if no edge from s
             if len(graph_sets[source]) == 0:
                 break
 
-            # initialize path and minimum weight along s-t path
-            path = []
-            path.append(source)
-
-            min_wt = float('inf')
-            # finds a single s-t path and updates residues along that path.
-            while True:
-
-                # if path is empty then exit and terminate the bfs
-                # since above means no s-t path is there
-                if len(path) == 0:
-                    break
-
-                # get last vertex in s-t path
-                curr = path[-1]
-
-                # Check if any vertices are adjacent to curr
-                # If no, then no s-t path exists
-                # Mark all incident edges for deletion next time they are seen
-                # Achieve above by setting all adjacency matrix entries -1 for that vertex
-
-                # Change to true if you find a child of curr
-                child_exists = False
-
-                # find the last available child of curr
-                while (not child_exists) and len(graph_sets[curr]) != 0:
-                    # get last vertex adjacent to curr
-                    child = graph_sets[curr].pop()
-
-                    # if valid child found
-                    if adj_matrix[curr, child] != 0:
-                        child_exists = True
-                        # add back popped edge if it is a valid child
-                        graph_sets[curr].add(child)
-
-                # if no child node found, then set curr for deletion
-                if len(graph_sets[curr]) == 0:
-                    # set for deletion in adj_matrix
-                    adj_matrix[:, curr] = 0
-                    # remove vertex from path
-                    path.pop()
-                    continue
-
-                # else path augmentation with child
-                # update path and min_wt in path
-                path.append(child)
-
-                if min_wt > adj_matrix[curr, child]:
-                    min_wt = adj_matrix[curr, child]
-
-                # if s-t path is found
-                if child == sink:
-                    # Decrement path weight by minimum weight along entire path
-                    # and update final_graph
-                    self.path_found()
-                    while len(path) > 1:
-                        temp1 = path.pop()
-                        temp2 = path[-1]
-                        adj_matrix[temp2, temp1] = adj_matrix[temp2, temp1] - min_wt
-                        final_graph_adj[temp2, temp1] = final_graph_adj[temp2, temp1] + min_wt
-                    break
+            path = self.find_path(graph_sets, adj_matrix, final_graph_adj)
+            for i in range(vert):
+                final_graph[i] = []
+                for j in range(len(graph[i])):
+                    temp1, temp2 = graph[i][j]
+                    final_graph[i].append((temp1, final_graph_adj[i, temp1]))
+            self.states.append((path, deepcopy(final_graph)))
+            print 'found path', path
 
         # final_graph_adj stores the weights of each edge in the blocking flow graph
         # final_graph contains the blocking flow graph in reqd. format
@@ -151,6 +110,75 @@ class BlockingFlowImageSequence(ImageSequence):
                 final_graph[i].append((temp1, final_graph_adj[i, temp1]))
 
         return final_graph
+
+    def find_path(self, graph_sets, adj_matrix, final_graph_adj):
+        source = self.source
+        sink = self.sink
+
+        # initialize path and minimum weight along s-t path
+        path = []
+        path.append(source)
+
+        ret_path = None
+
+        min_wt = float('inf')
+        # finds a single s-t path and updates residues along that path.
+        while True:
+
+            # if path is empty then exit and terminate the bfs
+            # since above means no s-t path is there
+            if len(path) == 0:
+                break
+
+            # get last vertex in s-t path
+            curr = path[-1]
+
+            # Check if any vertices are adjacent to curr
+            # If no, then no s-t path exists
+            # Mark all incident edges for deletion next time they are seen
+            # Achieve above by setting all adjacency matrix entries -1 for that vertex
+
+            # Change to true if you find a child of curr
+            child_exists = False
+
+            # find the last available child of curr
+            while (not child_exists) and len(graph_sets[curr]) != 0:
+                # get last vertex adjacent to curr
+                child = graph_sets[curr].pop()
+
+                # if valid child found
+                if adj_matrix[curr, child] != 0:
+                    child_exists = True
+                    # add back popped edge if it is a valid child
+                    graph_sets[curr].add(child)
+
+            # if no child node found, then set curr for deletion
+            if len(graph_sets[curr]) == 0:
+                # set for deletion in adj_matrix
+                adj_matrix[:, curr] = 0
+                # remove vertex from path
+                path.pop()
+                continue
+
+            # else path augmentation with child
+            # update path and min_wt in path
+            path.append(child)
+
+            if min_wt > adj_matrix[curr, child]:
+                min_wt = adj_matrix[curr, child]
+
+            # if s-t path is found
+            if child == sink:
+                # Decrement path weight by minimum weight along entire path
+                # and update final_graph
+                ret_path = list(path)
+                while len(path) > 1:
+                    temp1 = path.pop()
+                    temp2 = path[-1]
+                    adj_matrix[temp2, temp1] = adj_matrix[temp2, temp1] - min_wt
+                    final_graph_adj[temp2, temp1] = final_graph_adj[temp2, temp1] + min_wt
+                break
+        return ret_path
 
 
 def test():

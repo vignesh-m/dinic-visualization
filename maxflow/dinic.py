@@ -5,13 +5,14 @@ import matplotlib.image as mpimg
 from graph import display_graph
 import random
 
-INF = 1000000000
+INF = 1000000000 # use double inf
 
 
 def find_distances(graph, source):
     """ Find distances using bfs """
     # TODO implement
-    return [random.choice([0, INF]) for _ in graph]
+    # return [random.choice([0, INF]) for _ in graph]
+    return [0 for _ in graph]
 
 
 class DinicImageSequence(ImageSequence):
@@ -45,14 +46,14 @@ class DinicImageSequence(ImageSequence):
             dist = find_distances(self.graph, self.source)
             if dist[self.sink] == INF:
                 self.done = True
-                print 'completed dinic'
-                return self.init_image()
+                print 'completed dinics'
+                return None
             else:
                 # find blocking flow
                 print 'finding blocking flow'
                 self.blocking_flow = BlockingFlowImageSequence(self.graph, self.vertices, self.edges, dist, self.source, self.sink)
                 self.status = 1
-                return self.next_image()
+                return self.blocking_flow.init_image()
 
     def complete(self):
         return self.done

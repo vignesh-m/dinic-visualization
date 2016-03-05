@@ -33,8 +33,9 @@ class ImageSequenceRenderer(object):
             plt.draw()
             return
         self.image = self.seq.next_image()
-        self.plot.set_data(self.image)
-        plt.draw()
+        if self.image is not None:
+            self.plot.set_data(self.image)
+            plt.draw()
 
 
 class ImageSequence(object):

@@ -30,7 +30,7 @@ def input_graph(input_file=sys.stdin):
     return graph, n, m
 
 
-def display_graph(graph, filename="graphviz_output"):
+def display_graph(graph, filename="graphviz_output", highlight_path=None):
     """ simply displays a graph using graphviz.
     renders to filename.png
     """
@@ -38,7 +38,13 @@ def display_graph(graph, filename="graphviz_output"):
     n = len(graph)
     for i in map(str, range(n)):
         dot.node(i)
+    if highlight_path:
+        path_edges = zip(highlight_path, highlight_path[1:])
     for i in range(n):
         for j, c in graph[i]:
-            dot.edge(str(i), str(j), label=str(c))
+            if highlight_path and (i, j) in path_edges:
+                print 'got path edge', (i, j)
+                dot.edge(str(i), str(j), label=str(c), color='red')
+            else:
+                dot.edge(str(i), str(j), label=str(c))
     dot.render(filename)

@@ -16,10 +16,27 @@ def dinic_test():
 
 
 def blocking_flow_test():
-    b = BlockingFlowImageSequence(graph, v, e, [], 0, v - 1)
+    b = BlockingFlowImageSequence(graph, v, e,[], 0, v - 1)
     block_graph = b.blocking_flow()
     print "blocking flow", block_graph
     display_graph(block_graph, "Block_flow")
 
+def residual_test():
 
-dinic_test()
+    graph_zero_wt = [[] for i in range(v)]
+
+    for i in range(v):
+        for j in range(len(graph[i])):
+            temp1, temp2 = graph[i][j]
+            graph_zero_wt[i].append((temp1, temp2-2))
+    
+    b = DinicImageSequence(graph_zero_wt, v, e, 0, v - 1)
+    res_graph = b.residual(graph)
+
+    display_graph(res_graph,"residual_graph")
+
+
+
+# dinic_test()
+residual_test()
+

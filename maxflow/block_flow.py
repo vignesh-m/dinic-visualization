@@ -47,7 +47,10 @@ class BlockingFlowImageSequence(ImageSequence):
                 self.done = True
                 return None
             print 'path', self.states[self.idx][0]
-            display_graph(self.states[self.idx][1], filename="blocking_flow_next", highlight_path=self.states[self.idx][0])
+            display_graph(self.states[self.idx][1],
+                          filename="blocking_flow_next",
+                          highlight_path=self.states[self.idx][0],
+                          capacities=self.adj_matrix_capacitites)
             self.idx += 1
             return mpimg.imread('blocking_flow_next.png')
 
@@ -88,6 +91,7 @@ class BlockingFlowImageSequence(ImageSequence):
             for j in range(len(graph[i])):
                 temp1, temp2 = graph[i][j]
                 adj_matrix[i, temp1] = temp2
+        self.adj_matrix_capacitites = deepcopy(adj_matrix)
 
         # loop |E| times on modified DFS
         for i in range(edges):

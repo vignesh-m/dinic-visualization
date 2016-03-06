@@ -16,7 +16,7 @@ class Queue:
     def enqueue(self,node):
         self.nodes.insert(0,node)
     def dequeue(self):
-        self.nodes.pop()
+        return self.nodes.pop()
 
 def find_distances(graph, source):
     """ Find distances using bfs """
@@ -26,7 +26,7 @@ def find_distances(graph, source):
     q.enqueue(source)
     while(q.isempty()==0):
         current=q.dequeue()
-        for t in graph[current]
+        for t in graph[current]:
             if dist[t[0]]==INF:
                 dist[t[0]]=dist[current]+1
                 q.enqueue(t[0])
@@ -81,7 +81,7 @@ class DinicImageSequence(ImageSequence):
         # capacity_graph gives a graph with all the maximum capacity of the edges
 
         vert = self.vertices
-        
+
         # Residual graph
         res_graph = [[] for i in range(vert)]
         res_adj_matrix = np.zeros((vert, vert), dtype=np.int)
@@ -103,7 +103,7 @@ class DinicImageSequence(ImageSequence):
                 temp1, temp2 = capacity_graph[i][j]
                 cap_adj_matrix[i, temp1] = temp2
 
-        
+
         #Find residual graph
         for i in range(self.vertices):
             for j in range(i+1,self.vertices):
@@ -118,5 +118,4 @@ class DinicImageSequence(ImageSequence):
                     res_graph[j].append((i, res_adj_matrix[j,i]))
 
 
-        return res_graph 
-
+        return res_graph

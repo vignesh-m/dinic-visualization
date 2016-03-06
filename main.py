@@ -28,10 +28,10 @@ def residual_test():
     for i in range(v):
         for j in range(len(graph[i])):
             temp1, temp2 = graph[i][j]
-            graph_zero_wt[i].append((temp1, temp2 - 2))
+            graph_zero_wt[i].append((temp1, 0))
 
-    b = DinicImageSequence(graph_zero_wt, v, e, 0, v - 1)
-    res_graph = b.residual(graph)
+    b = DinicImageSequence(graph, v, e, 0, v - 1)
+    res_graph = b.residual(graph_zero_wt)
 
     display_graph(res_graph, "residual_graph")
 
@@ -42,3 +42,4 @@ def bfs_test():
 # bfs_test()
 dinic_test()
 # residual_test()
+

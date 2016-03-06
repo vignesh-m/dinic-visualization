@@ -63,5 +63,5 @@ docs/_build/
 target/
 
 tmp/
-
+maxflow/*.pyc
 .ipynb_checkpoints/

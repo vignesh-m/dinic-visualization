@@ -30,10 +30,15 @@ def input_graph(input_file=sys.stdin):
     return graph, n, m
 
 
-def display_graph(graph, filename="graphviz_output", highlight_path=None):
+def display_graph(graph, filename="graphviz_output", highlight_path=None, capacities=None):
     """ simply displays a graph using graphviz.
     renders to filename.png
     """
+    def label(edge, weight, capacities):
+        if capacities is not None:
+            return str(weight) + ' / ' + str(capacities[edge])
+        else:
+            return str(weight)
     dot = graphviz.Digraph(comment="max flow graph", format='png')
     n = len(graph)
     for i in map(str, range(n)):
@@ -44,7 +49,7 @@ def display_graph(graph, filename="graphviz_output", highlight_path=None):
         for j, c in graph[i]:
             if highlight_path and (i, j) in path_edges:
                 print 'got path edge', (i, j)
-                dot.edge(str(i), str(j), label=str(c), color='red')
+                dot.edge(str(i), str(j), label=label((i, j), c, capacities), color='red')
             else:
-                dot.edge(str(i), str(j), label=str(c))
+                dot.edge(str(i), str(j), label=label((i, j), c, capacities))
     dot.render(filename)

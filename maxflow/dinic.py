@@ -34,11 +34,19 @@ class DinicImageSequence(ImageSequence):
         self.vertices = nvertices
         self.source = source
         self.sink = sink
+
         self.flow = 0
         self.done = False
         self.status = 0  # status=1 when blocking flow is in progress
+        self.blocking_flow = None
         print "dinic with", graph
         # set init image
+
+    def find_distances(self):
+        """ Find distances using bfs """
+        # TODO implement
+        # return [random.choice([0, INF]) for _ in graph]
+        return [0 for _ in self.graph]
 
     def init_image(self):
         # set init image
@@ -53,7 +61,7 @@ class DinicImageSequence(ImageSequence):
                 self.status = 0
             return _next
         else:
-            dist = find_distances(self.graph, self.source)
+            dist = self.find_distances()
             if dist[self.sink] == INF:
                 self.done = True
                 print 'completed dinics'
@@ -63,6 +71,7 @@ class DinicImageSequence(ImageSequence):
                 print 'finding blocking flow'
                 self.blocking_flow = BlockingFlowImageSequence(self.graph, self.vertices, self.edges, dist, self.source, self.sink)
                 self.status = 1
+                # update self.flow, self.graph(?)
                 return self.blocking_flow.init_image()
 
     def complete(self):

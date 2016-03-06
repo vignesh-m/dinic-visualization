@@ -13,8 +13,11 @@ from copy import deepcopy
 
 
 class BlockingFlowImageSequence(ImageSequence):
-    """ find blocking flow from source to sink,
-        given graph and distances array
+    """ Find blocking flow from source to sink,
+        given graph and distances array.
+
+        For now, all intermediate states are computed on initialization,
+        instead of when next_image is called.
     """
     def __init__(self, graph, nvertices, nedges, dist, source, sink):
         ImageSequence.__init__(self)
@@ -44,7 +47,10 @@ class BlockingFlowImageSequence(ImageSequence):
                 self.done = True
                 return None
             print 'path', self.states[self.idx][0]
-            display_graph(self.states[self.idx][1], filename="blocking_flow_next", highlight_path=self.states[self.idx][0])
+            display_graph(self.states[self.idx][1],
+                          filename="blocking_flow_next",
+                          highlight_path=self.states[self.idx][0],
+                          capacities=self.adj_matrix_capacitites)
             self.idx += 1
             return mpimg.imread('blocking_flow_next.png')
 
@@ -59,6 +65,7 @@ class BlockingFlowImageSequence(ImageSequence):
         Finds a blocking flow of graph from source to sink.
         s - source, t - sink
         """
+        # TODO use dist array
         graph = self.graph
         vert = self.vertices
         edges = self.edges
@@ -84,6 +91,7 @@ class BlockingFlowImageSequence(ImageSequence):
             for j in range(len(graph[i])):
                 temp1, temp2 = graph[i][j]
                 adj_matrix[i, temp1] = temp2
+        self.adj_matrix_capacitites = deepcopy(adj_matrix)
 
         # loop |E| times on modified DFS
         for i in range(edges):

@@ -16,6 +16,7 @@ class ImageSequenceRenderer(object):
 
         plt.subplot(111)
         plt.title('Dinic')
+        plt.axis('off')
         self.plot = plt.imshow(self.image)
 
         # plt.subplots_adjust(bottom=0.2)

@@ -7,19 +7,20 @@ import random
 import numpy as np
 from Queue import Queue
 
-INF = float('inf') # use double inf
+INF = float('inf')  # use double inf
+
 
 def find_distances(graph, source):
     """ Find distances using bfs """
     dist = [INF for _ in graph]
     q = Queue()
-    dist[source]=0
+    dist[source] = 0
     q.put(source)
-    while(q.empty()==0):
-        current=q.get()
+    while(q.empty() == 0):
+        current = q.get()
         for t in graph[current]:
-            if dist[t[0]]==INF:
-                dist[t[0]]=dist[current]+1
+            if dist[t[0]] == INF:
+                dist[t[0]] = dist[current] + 1
                 q.put(t[0])
     return dist
 
@@ -88,25 +89,21 @@ class DinicImageSequence(ImageSequence):
                 temp1, temp2 = self.graph[i][j]
                 adj_matrix[i, temp1] = temp2
 
-
         for i in range(self.vertices):
-            for j in range( len(capacity_graph[i]) ):
+            for j in range(len(capacity_graph[i])):
                 temp1, temp2 = capacity_graph[i][j]
                 cap_adj_matrix[i, temp1] = temp2
 
-
-        #Find residual graph
+        # Find residual graph
         for i in range(self.vertices):
-            for j in range(i+1,self.vertices):
-                res_adj_matrix[i,j] = (cap_adj_matrix[i,j] -adj_matrix[i,j]) + adj_matrix[j,i]
-                res_adj_matrix[j,i] = (cap_adj_matrix[j,i] -adj_matrix[j,i]) + adj_matrix[i,j]
+            for j in range(i + 1, self.vertices):
+                res_adj_matrix[i, j] = (cap_adj_matrix[i, j] - adj_matrix[i, j]) + adj_matrix[j, i]
+                res_adj_matrix[j, i] = (cap_adj_matrix[j, i] - adj_matrix[j, i]) + adj_matrix[i, j]
 
                 # Store also as matrix and as a adjacency list form
-                if res_adj_matrix[i,j]!=0:
-                    res_graph[i].append((j, res_adj_matrix[i,j]))
+                if res_adj_matrix[i, j] != 0:
+                    res_graph[i].append((j, res_adj_matrix[i, j]))
 
-                if res_adj_matrix[j,i]!=0:
-                    res_graph[j].append((i, res_adj_matrix[j,i]))
-
-
+                if res_adj_matrix[j, i] != 0:
+                    res_graph[j].append((i, res_adj_matrix[j, i]))
         return res_graph

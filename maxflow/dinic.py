@@ -79,7 +79,7 @@ class DinicImageSequence(ImageSequence):
     def complete(self):
         return self.done
 
-    def residual(self, capacity_graph):
+    def residual(self, wt_graph):
 
         # capacity_graph gives a graph with all the maximum capacity of the edges
 
@@ -90,7 +90,7 @@ class DinicImageSequence(ImageSequence):
         res_adj_matrix = np.zeros((vert, vert), dtype=np.int)
 
         # Capacity graph adj matrix
-        cap_adj_matrix = np.zeros((vert, vert), dtype=np.int)
+        wt_adj_matrix = np.zeros((vert, vert), dtype=np.int)
 
         # original graph adjacency matrix
         adj_matrix = np.zeros((vert, vert), dtype=np.int)
@@ -101,15 +101,15 @@ class DinicImageSequence(ImageSequence):
                 adj_matrix[i, temp1] = temp2
 
         for i in range(self.vertices):
-            for j in range(len(capacity_graph[i])):
-                temp1, temp2 = capacity_graph[i][j]
-                cap_adj_matrix[i, temp1] = temp2
+            for j in range(len(wt_graph[i])):
+                temp1, temp2 = wt_graph[i][j]
+                wt_adj_matrix[i, temp1] = temp2
 
         # Find residual graph
         for i in range(self.vertices):
             for j in range(i + 1, self.vertices):
-                res_adj_matrix[i, j] = (cap_adj_matrix[i, j] - adj_matrix[i, j]) + adj_matrix[j, i]
-                res_adj_matrix[j, i] = (cap_adj_matrix[j, i] - adj_matrix[j, i]) + adj_matrix[i, j]
+                res_adj_matrix[i, j] = (adj_matrix[i, j] - wt_adj_matrix[i, j]) + wt_adj_matrix[j, i]
+                res_adj_matrix[j, i] = (adj_matrix[j, i] - wt_adj_matrix[j, i]) + wt_adj_matrix[i, j]
 
                 # Store also as matrix and as a adjacency list form
                 if res_adj_matrix[i, j] != 0:
@@ -117,4 +117,30 @@ class DinicImageSequence(ImageSequence):
 
                 if res_adj_matrix[j, i] != 0:
                     res_graph[j].append((i, res_adj_matrix[j, i]))
+
         return res_graph
+
+
+    def dinic_algo():
+
+        vert = self.vertices
+        graph_wt = [[] for i in range(vert)]
+
+        for i in range(vert):
+            for j in range(len(graph[i])):
+                temp1, temp2 = graph[i][j]
+                graph_zero_wt[i].append((temp1, 0))
+
+        
+        wt_adj_matrix = np.asmatrix(np.zeros((vert, vert), dtype=np.int))
+
+        for v in range(vert):
+            
+
+            
+
+
+        
+
+
+

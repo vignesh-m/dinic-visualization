@@ -8,12 +8,29 @@ import numpy as np
 
 INF = float('inf') # use double inf
 
+class Queue:
+    def __init__(self):
+        self.nodes = []
+    def isempty(self):
+        return self.nodes == []
+    def enqueue(self,node):
+        self.nodes.insert(0,node)
+    def dequeue(self):
+        self.nodes.pop()
 
 def find_distances(graph, source):
     """ Find distances using bfs """
-    # TODO implement
-    # return [random.choice([0, INF]) for _ in graph]
-    return [0 for _ in graph]
+    dist = [INF for _ in graph]
+    q = Queue()
+    dist[source]=0
+    q.enqueue(source)
+    while(q.isempty()==0):
+        current=q.dequeue()
+        for t in graph[current]
+            if dist[t[0]]==INF:
+                dist[t[0]]=dist[current]+1
+                q.enqueue(t[0])
+    return dist
 
 
 class DinicImageSequence(ImageSequence):

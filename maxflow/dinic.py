@@ -26,7 +26,7 @@ def find_distances(graph, source):
 
 
 class DinicImageSequence(ImageSequence):
-    """ subclass image sequence """
+    """ dinic image sequence """
     def __init__(self, graph, nvertices, nedges, source, sink):
         ImageSequence.__init__(self)
         self.graph = graph
@@ -42,16 +42,17 @@ class DinicImageSequence(ImageSequence):
         print "dinic with", graph
         # set init image
 
-    def find_distances(self):
-        """ Find distances using bfs """
-        # TODO implement
-        # return [random.choice([0, INF]) for _ in graph]
-        return [0 for _ in self.graph]
-
     def init_image(self):
         # set init image
         display_graph(self.graph, 'dinic_init')
         return mpimg.imread('dinic_init.png')
+
+    def find_level_graph(self):
+        self.level_graph = [[] for _ in self.graph]
+        for i, l in enumerate(self.graph):
+            for j, c in l:
+                if self.dist[j] - self.dist[i] == 1:
+                    self.level_graph[i].append((j, c))
 
     def next_image(self):
         if self.status == 1:
@@ -61,15 +62,16 @@ class DinicImageSequence(ImageSequence):
                 self.status = 0
             return _next
         else:
-            dist = self.find_distances()
-            if dist[self.sink] == INF:
+            self.dist = find_distances(self.graph, self.source)
+            self.find_level_graph()
+            if self.dist[self.sink] == INF:
                 self.done = True
                 print 'completed dinics'
                 return None
             else:
                 # find blocking flow
                 print 'finding blocking flow'
-                self.blocking_flow = BlockingFlowImageSequence(self.graph, self.vertices, self.edges, dist, self.source, self.sink)
+                self.blocking_flow = BlockingFlowImageSequence(self.level_graph, self.vertices, self.edges, self.dist, self.source, self.sink)
                 self.status = 1
                 # update self.flow, self.graph(?)
                 return self.blocking_flow.init_image()

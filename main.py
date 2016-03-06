@@ -40,5 +40,5 @@ def bfs_test():
     print find_distances(graph, 0)
 
 # bfs_test()
-# dinic_test()
-residual_test()
+dinic_test()
+# residual_test()

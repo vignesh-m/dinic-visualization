@@ -59,11 +59,6 @@ class BlockingFlowImageSequence(ImageSequence):
 
     def path_found(self):
         print "path found"
-    
-    def get_block_flow_adj(self):
-        return self.block_adj_mat
-
-
 
     def blocking_flow(self):
         """
@@ -106,11 +101,6 @@ class BlockingFlowImageSequence(ImageSequence):
                 break
 
             path = self.find_path(graph_sets, adj_matrix, final_graph_adj)
-            
-            # Check if this is correct
-            if path == None:
-                continue
-
             for i in range(vert):
                 final_graph[i] = []
                 for j in range(len(graph[i])):
@@ -126,8 +116,6 @@ class BlockingFlowImageSequence(ImageSequence):
             for j in range(len(graph[i])):
                 temp1, temp2 = graph[i][j]
                 final_graph[i].append((temp1, final_graph_adj[i, temp1]))
-
-        self.block_adj_mat = final_graph_adj
 
         return final_graph
 

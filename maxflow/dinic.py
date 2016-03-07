@@ -121,26 +121,17 @@ class DinicImageSequence(ImageSequence):
         return res_graph
 
 
-    def dinic_algo():
-
-        vert = self.vertices
-        graph_wt = [[] for i in range(vert)]
-
-        for i in range(vert):
-            for j in range(len(graph[i])):
-                temp1, temp2 = graph[i][j]
-                graph_zero_wt[i].append((temp1, 0))
-
-        
-        wt_adj_matrix = np.asmatrix(np.zeros((vert, vert), dtype=np.int))
-
-        for v in range(vert):
-            
-
-            
-
-
-        
-
-
-
+    # def dinic_algo():
+    #
+    #     vert = self.vertices
+    #     graph_wt = [[] for i in range(vert)]
+    #
+    #     for i in range(vert):
+    #         for j in range(len(graph[i])):
+    #             temp1, temp2 = graph[i][j]
+    #             graph_zero_wt[i].append((temp1, 0))
+    #
+    #
+    #     wt_adj_matrix = np.asmatrix(np.zeros((vert, vert), dtype=np.int))
+    #
+    #     for v in range(vert):

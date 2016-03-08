@@ -6,6 +6,7 @@ from graph import display_graph
 import random
 import numpy as np
 from Queue import Queue
+from copy import deepcopy
 
 INF = float('inf')  # use double inf
 
@@ -30,19 +31,17 @@ class DinicImageSequence(ImageSequence):
     def __init__(self, graph, nvertices, nedges, source, sink):
         ImageSequence.__init__(self)
 
-
         # Self.graph is initialized to graph with all weights as zero
-        self.graph = [[] for i in range(v)]
-        for i in range(v):
+        self.graph = [[] for i in range(nvertices)]
+        for i in range(nvertices):
             for j in range(len(graph[i])):
                 temp1, temp2 = graph[i][j]
                 self.graph[i].append((temp1, 0))
 
-
         # Stores maximum capcities
-        self.graph_capacity = graph   
+        self.graph_capacity = graph
 
-        #Store edges,vertices,source and sink vertex
+        # Store edges,vertices,source and sink vertex
         self.edges = nedges
         self.vertices = nvertices
         self.source = source
@@ -51,7 +50,7 @@ class DinicImageSequence(ImageSequence):
         self.flow = 0
         self.done = False
         # status=1 when blocking flow is in progress
-        self.status = 0  
+        self.status = 0
         self.blocking_flow = None
         print "dinic with", graph
         # set init image
@@ -62,8 +61,9 @@ class DinicImageSequence(ImageSequence):
         return mpimg.imread('dinic_init.png')
 
     def find_level_graph(self):
+        self.find_residual()
         self.level_graph = [[] for _ in self.graph]
-        for i, l in enumerate(self.graph):
+        for i, l in enumerate(self.residual_graph):
             for j, c in l:
                 if self.dist[j] - self.dist[i] == 1:
                     self.level_graph[i].append((j, c))
@@ -78,6 +78,7 @@ class DinicImageSequence(ImageSequence):
         else:
             self.dist = find_distances(self.graph, self.source)
             self.find_level_graph()
+
             if self.dist[self.sink] == INF:
                 self.done = True
                 print 'completed dinics'
@@ -87,13 +88,13 @@ class DinicImageSequence(ImageSequence):
                 print 'finding blocking flow'
                 self.blocking_flow = BlockingFlowImageSequence(self.level_graph, self.vertices, self.edges, self.dist, self.source, self.sink)
                 self.status = 1
-                # update self.flow, self.graph(?)
+                self.update_flow()
                 return self.blocking_flow.init_image()
 
     def complete(self):
         return self.done
 
-    def residual(self):
+    def find_residual(self):
 
         vert = self.vertices
 
@@ -114,7 +115,7 @@ class DinicImageSequence(ImageSequence):
 
         for i in range(vert):
             for j in range(len(self.graph_capacity[i])):
-                temp1, temp2 = wt_graph[i][j]
+                temp1, temp2 = self.graph_capacity[i][j]
                 cap_adj_matrix[i, temp1] = temp2
 
         # Find residual graph
@@ -130,19 +131,23 @@ class DinicImageSequence(ImageSequence):
                 if res_adj_matrix[j, i] != 0:
                     res_graph[j].append((i, res_adj_matrix[j, i]))
 
-        return res_graph,res_adj_matrix
+        self.residual_graph = res_graph
+        return res_graph, res_adj_matrix
 
+    def update_flow(self):
+        """
+        Update self.graph etc, after getting a blocking_flow
+        """
 
     def dinic_algo():
 
         # TODO alter function for using in visualization
         vert = self.vertices
-        
-        
+
         adj_matrix = (np.zeros((vert, vert), dtype=np.int))
         cap_adj_matrix = np.zeros((vert, vert), dtype=np.int)
 
-        #Initialize adjacency matrices for capacity and current graph
+        # Initialize adjacency matrices for capacity and current graph
         for i in range(vert):
             for j in range(len(self.graph[i])):
                 temp1, temp2 = self.graph[i][j]
@@ -157,9 +162,9 @@ class DinicImageSequence(ImageSequence):
             """
              TODO :     why is level graph being calculate on self.graph(suggestion : create self.res_graph ??
                         New class for residual graph ??
-                        
+
                         create a self.adj_matrix object instead of recreating the object?
-            """           
+            """
 # loop start:
             # keep a copy of capacity and original graph
 
@@ -168,25 +173,13 @@ class DinicImageSequence(ImageSequence):
             # Computer blocking flow
 
             # Subtract the weights of graph with blocking flow graph
-            # ?? Use adjacency_matrix for above? (since will be much faster) 
-            # also create adjacency list since it is require for graphviz 
-            
+            # ?? Use adjacency_matrix for above? (since will be much faster)
+            # also create adjacency list since it is require for graphviz
+
             # if no change in flow after update exit loop(i.e. no blocking flow
             # loop again(i.e)
-
 
             block = BlockingFlowImageSequence(self.level_graph, self.vertices, self.edges, dist, self.source, self.sink)
 
             block_graph = block.blocking_flow()
             block_graph_adj = block.get_block_flow_adj()
-            
-
-
-
-            
-
-
-        
-
-
-

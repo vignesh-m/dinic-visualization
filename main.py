@@ -42,4 +42,3 @@ def bfs_test():
 # bfs_test()
 dinic_test()
 # residual_test()
-

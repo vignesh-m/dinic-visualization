@@ -59,7 +59,7 @@ class BlockingFlowImageSequence(ImageSequence):
 
     def path_found(self):
         print "path found"
-    
+
     def get_block_flow_adj(self):
         return self.block_adj_mat
 
@@ -106,7 +106,7 @@ class BlockingFlowImageSequence(ImageSequence):
                 break
 
             path = self.find_path(graph_sets, adj_matrix, final_graph_adj)
-            
+
             # Check if this is correct
             if path == None:
                 continue

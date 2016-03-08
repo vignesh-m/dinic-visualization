@@ -9,15 +9,17 @@ class ImageSequenceRenderer(object):
     """ renders sequence of images provided by ImageSequence """
     def __init__(self, image_sequence):
 
-        fig, ax = plt.subplots()
+        fig, ax = plt.subplots(figsize=(15,10))
 
         self.seq = image_sequence
         self.image = self.seq.init_image()
 
         plt.subplot(111)
-        plt.title('Dinic')
+#         plt.title('Dinic')
         plt.axis('off')
         self.plot = plt.imshow(self.image)
+
+
 
         # plt.subplots_adjust(bottom=0.2)
         plt.subplots_adjust(bottom=0.2)

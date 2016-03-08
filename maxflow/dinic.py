@@ -53,6 +53,8 @@ class DinicImageSequence(ImageSequence):
             for j, c in l:
                 if self.dist[j] - self.dist[i] == 1:
                     self.level_graph[i].append((j, c))
+                else:
+                    self.level_graph[i].append((j, 0))
 
     def next_image(self):
         if self.status == 1:

@@ -11,6 +11,8 @@ class ImageSequenceRenderer(object):
 
         fig, ax = plt.subplots(figsize=(15,10))
 
+        fig.patch.set_facecolor('#333333')
+
         self.seq = image_sequence
         self.image = self.seq.init_image()
 

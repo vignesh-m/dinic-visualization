@@ -66,10 +66,10 @@ class DinicImageSequence(ImageSequence):
             for j, c in l:
                 if self.dist[j] - self.dist[i] == 1:
                     self.level_graph[i].append((j, c))
+                else:
+                    self.level_graph[i].append((j, 0))
 
     def next_image(self):
-
-        print "graph weights",self.graph
         if self.status == 1:
             print 'in blocking flow'
             _next = self.blocking_flow.next_image()
@@ -101,6 +101,7 @@ class DinicImageSequence(ImageSequence):
         return self.done
 
     def find_residual(self):
+        # capacity_graph gives a graph with all the maximum capacity of the edges
 
         vert = self.vertices
 
@@ -109,7 +110,7 @@ class DinicImageSequence(ImageSequence):
         res_adj_matrix = np.zeros((vert, vert), dtype=np.int)
 
         # Capacity graph adj matrix
-        cap_adj_matrix = np.zeros((vert, vert), dtype=np.int)
+        wt_adj_matrix = np.zeros((vert, vert), dtype=np.int)
 
         # original graph adjacency matrix
         adj_matrix = np.zeros((vert, vert), dtype=np.int)
@@ -127,8 +128,8 @@ class DinicImageSequence(ImageSequence):
         # Find residual graph
         for i in range(self.vertices):
             for j in range(i + 1, self.vertices):
-                res_adj_matrix[i, j] = (cap_adj_matrix[i, j] - adj_matrix[i, j]) + adj_matrix[j, i]
-                res_adj_matrix[j, i] = (cap_adj_matrix[j, i] - adj_matrix[j, i]) + adj_matrix[i, j]
+                res_adj_matrix[i, j] = (adj_matrix[i, j] - wt_adj_matrix[i, j]) + wt_adj_matrix[j, i]
+                res_adj_matrix[j, i] = (adj_matrix[j, i] - wt_adj_matrix[j, i]) + wt_adj_matrix[i, j]
 
                 # Store also as matrix and as a adjacency list form
                 if res_adj_matrix[i, j] != 0:
@@ -148,48 +149,3 @@ class DinicImageSequence(ImageSequence):
             for j in range(len(self.graph[i])):
                 if i < range(len(self.block_flow_graph)) and j < range(len(self.block_flow_graph[i])):
                     self.graph[i][j] = (self.graph[i][j][0], self.graph[i][j][1] + self.block_flow_graph[i][j][1])
-
-    def dinic_algo():
-
-        # TODO alter function for using in visualization
-        vert = self.vertices
-
-        adj_matrix = (np.zeros((vert, vert), dtype=np.int))
-        cap_adj_matrix = np.zeros((vert, vert), dtype=np.int)
-
-        # Initialize adjacency matrices for capacity and current graph
-        for i in range(vert):
-            for j in range(len(self.graph[i])):
-                temp1, temp2 = self.graph[i][j]
-                adj_matrix[i, temp1] = temp2
-
-        for i in range(vert):
-            for j in range(len(self.graph_capacity[i])):
-                temp1, temp2 = wt_graph[i][j]
-                cap_adj_matrix[i, temp1] = temp2
-
-        for v in range(vert):
-            """
-             TODO :     why is level graph being calculate on self.graph(suggestion : create self.res_graph ??
-                        New class for residual graph ??
-
-                        create a self.adj_matrix object instead of recreating the object?
-            """
-# loop start:
-            # keep a copy of capacity and original graph
-
-            # compute residual graph
-            # Compute level_graph
-            # Computer blocking flow
-
-            # Subtract the weights of graph with blocking flow graph
-            # ?? Use adjacency_matrix for above? (since will be much faster)
-            # also create adjacency list since it is require for graphviz
-
-            # if no change in flow after update exit loop(i.e. no blocking flow
-            # loop again(i.e)
-
-            block = BlockingFlowImageSequence(self.level_graph, self.vertices, self.edges, dist, self.source, self.sink)
-
-            block_graph = block.blocking_flow()
-            block_graph_adj = block.get_block_flow_adj()

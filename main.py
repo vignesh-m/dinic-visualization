@@ -5,9 +5,13 @@ from maxflow.graph import input_graph, display_graph
 from maxflow.block_flow import BlockingFlowImageSequence
 from gui.image_display import start_gui
 
+import pdb
+
 graph, v, e = input_graph()
 display_graph(graph)
 print graph
+
+pdb.set_trace()
 
 
 def dinic_test():

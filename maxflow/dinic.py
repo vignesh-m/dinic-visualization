@@ -37,7 +37,6 @@ class DinicImageSequence(ImageSequence):
             for j in range(len(graph[i])):
                 temp1, temp2 = graph[i][j]
                 self.graph[i].append((temp1, 0))
-
         # Stores maximum capcities
         self.graph_capacity = graph
 
@@ -69,6 +68,8 @@ class DinicImageSequence(ImageSequence):
                     self.level_graph[i].append((j, c))
 
     def next_image(self):
+
+        print "graph weights",self.graph
         if self.status == 1:
             print 'in blocking flow'
             _next = self.blocking_flow.next_image()
@@ -88,8 +89,13 @@ class DinicImageSequence(ImageSequence):
                 print 'finding blocking flow'
                 self.blocking_flow = BlockingFlowImageSequence(self.level_graph, self.vertices, self.edges, self.dist, self.source, self.sink)
                 self.status = 1
+
+                image = self.blocking_flow.init_image()
+                self.block_flow_graph = self.blocking_flow.block_flow
+                print self.block_flow_graph
                 self.update_flow()
-                return self.blocking_flow.init_image()
+                print self.graph
+                return image
 
     def complete(self):
         return self.done
@@ -138,6 +144,10 @@ class DinicImageSequence(ImageSequence):
         """
         Update self.graph etc, after getting a blocking_flow
         """
+        for i in range(len(self.graph)):
+            for j in range(len(self.graph[i])):
+                if i < range(len(self.block_flow_graph)) and j < range(len(self.block_flow_graph[i])):
+                    self.graph[i][j] = (self.graph[i][j][0], self.graph[i][j][1] + self.block_flow_graph[i][j][1])
 
     def dinic_algo():
 

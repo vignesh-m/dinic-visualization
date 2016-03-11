@@ -5,9 +5,13 @@ from maxflow.graph import input_graph, display_graph
 from maxflow.block_flow import BlockingFlowImageSequence
 from gui.image_display import start_gui
 
+import pdb
+
 graph, v, e = input_graph()
 display_graph(graph)
 print graph
+
+# pdb.set_trace()
 
 
 def dinic_test():
@@ -31,7 +35,7 @@ def residual_test():
             graph_zero_wt[i].append((temp1, 0))
 
     b = DinicImageSequence(graph, v, e, 0, v - 1)
-    res_graph = b.residual(graph_zero_wt)
+    res_graph = b.find_residual()
 
     display_graph(res_graph, "residual_graph")
 
@@ -42,4 +46,3 @@ def bfs_test():
 # bfs_test()
 dinic_test()
 # residual_test()
-

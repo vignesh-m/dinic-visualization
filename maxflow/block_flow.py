@@ -101,6 +101,10 @@ class BlockingFlowImageSequence(ImageSequence):
                 break
 
             path = self.find_path(graph_sets, adj_matrix, final_graph_adj)
+
+            # Check if this is correct
+            if path is None:
+                continue
             for i in range(vert):
                 final_graph[i] = []
                 for j in range(len(graph[i])):

@@ -76,15 +76,26 @@ def display_graph(graph, filename="graphviz_output", highlight_path=None, capaci
     def color_dot(edge, weight, capacities):
         if capacities is not None:
             if capacities[edge] == 0 :
-                return '#333333'
+                return '#444444'#333333'
             elif capacities[edge] == weight :
                 return 'red'
         else:
             if weight==0:
-                return '#333333'
+                return '#444444'#333333'
 
         return 'white'
     
+    def style_dot(edge,weight,capacities):
+        if capacities is not None:
+            if capacities[edge] == 0 :
+                return 'dashed'
+            elif capacities[edge] == weight :
+                return 'solid'
+        else:
+            if weight==0:
+                return 'solid' 
+
+        return 'solid'
     def font_dot(edge,weight,capacities):
         if capacities is None:
             if weight==0 :
@@ -113,11 +124,12 @@ def display_graph(graph, filename="graphviz_output", highlight_path=None, capaci
 
     dot = graphviz.Digraph(comment="max flow graph", format='png',engine='neato')
 
-    dot.attr('node', shape='doublecircle')
+#     dot.attr('node', shape='doublecircle')
     
     dot.body.append('size="20,8"')
     dot.body.append('rankdir="LR"')
     dot.body.append('ratio="fill"')
+    dot.body.append('overlap ="true"')
     dot.body.append('margin=0')
 
 #     assume source and sink are 0 and n-1
@@ -140,7 +152,7 @@ def display_graph(graph, filename="graphviz_output", highlight_path=None, capaci
                 print 'got path edge', (i, j)
                 dot.edge(str(i), str(j), label=label((i, j), c, capacities), color='#FF9900', fontcolor = font_dot((i,j),c,capacities))
             else:
-                dot.edge(str(i), str(j), label=label((i, j), c, capacities), color=color_dot((i,j),c,capacities), fontcolor = font_dot((i,j),c,capacities))
+                dot.edge(str(i), str(j), label=label((i, j), c, capacities), color=color_dot((i,j),c,capacities), fontcolor = font_dot((i,j),c,capacities),style = style_dot((i,j),c,capacities))
 
 
     dot.body.append('fontsize=30')

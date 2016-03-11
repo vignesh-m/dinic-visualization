@@ -1,3 +1,15 @@
+#Ignore picture files
+maxflow/__init__.pyc
+graphviz_output.png
+graphviz_output
+dinic_init.png
+dinic_init
+blocking_flow_next.png
+blocking_flow_next
+blocking_flow_init.png
+blocking_flow_init
+
+
 # ignore virtualenv files
 graph/
 

@@ -11,7 +11,7 @@ graph, v, e = input_graph()
 display_graph(graph)
 print graph
 
-pdb.set_trace()
+# pdb.set_trace()
 
 
 def dinic_test():
@@ -35,7 +35,7 @@ def residual_test():
             graph_zero_wt[i].append((temp1, 0))
 
     b = DinicImageSequence(graph, v, e, 0, v - 1)
-    res_graph = b.residual(graph_zero_wt)
+    res_graph = b.find_residual()
 
     display_graph(res_graph, "residual_graph")
 

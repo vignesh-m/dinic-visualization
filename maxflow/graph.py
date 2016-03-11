@@ -111,12 +111,12 @@ def display_graph(graph, filename="graphviz_output", highlight_path=None, capaci
 
 
 
-    dot = graphviz.Digraph(comment="max flow graph", format='png')
+    dot = graphviz.Digraph(comment="max flow graph", format='png',engine='neato')
 
     dot.attr('node', shape='doublecircle')
     
     dot.body.append('size="20,8"')
-    dot.body.append('rankdir=UD')
+    dot.body.append('rankdir="LR"')
     dot.body.append('ratio="fill"')
     dot.body.append('margin=0')
 

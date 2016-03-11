@@ -37,8 +37,10 @@ class DinicImageSequence(ImageSequence):
             for j in range(len(graph[i])):
                 temp1, temp2 = graph[i][j]
                 self.graph[i].append((temp1, 0))
+
         # Stores maximum capcities
         self.graph_capacity = graph
+        self.residual_graph = graph
 
         # Store edges,vertices,source and sink vertex
         self.edges = nedges
@@ -60,7 +62,6 @@ class DinicImageSequence(ImageSequence):
         return mpimg.imread('dinic_init.png')
 
     def find_level_graph(self):
-        self.find_residual()
         self.level_graph = [[] for _ in self.graph]
         for i, l in enumerate(self.residual_graph):
             for j, c in l:
@@ -77,7 +78,8 @@ class DinicImageSequence(ImageSequence):
                 self.status = 0
             return _next
         else:
-            self.dist = find_distances(self.graph, self.source)
+            self.find_residual()
+            self.dist = find_distances(self.residual_graph, self.source)
             self.find_level_graph()
 
             if self.dist[self.sink] == INF:
@@ -95,6 +97,7 @@ class DinicImageSequence(ImageSequence):
                 print self.block_flow_graph
                 self.update_flow()
                 print self.graph
+                print self.dist
                 return image
 
     def complete(self):
@@ -123,13 +126,13 @@ class DinicImageSequence(ImageSequence):
         for i in range(vert):
             for j in range(len(self.graph_capacity[i])):
                 temp1, temp2 = self.graph_capacity[i][j]
-                cap_adj_matrix[i, temp1] = temp2
+                wt_adj_matrix[i, temp1] = temp2
 
         # Find residual graph
         for i in range(self.vertices):
             for j in range(i + 1, self.vertices):
-                res_adj_matrix[i, j] = (adj_matrix[i, j] - wt_adj_matrix[i, j]) + wt_adj_matrix[j, i]
-                res_adj_matrix[j, i] = (adj_matrix[j, i] - wt_adj_matrix[j, i]) + wt_adj_matrix[i, j]
+                res_adj_matrix[i, j] = (wt_adj_matrix[i, j] - adj_matrix[i, j]) + adj_matrix[j, i]
+                res_adj_matrix[j, i] = (wt_adj_matrix[j, i] - adj_matrix[j, i]) + adj_matrix[i, j]
 
                 # Store also as matrix and as a adjacency list form
                 if res_adj_matrix[i, j] != 0:
@@ -139,7 +142,8 @@ class DinicImageSequence(ImageSequence):
                     res_graph[j].append((i, res_adj_matrix[j, i]))
 
         self.residual_graph = res_graph
-        return res_graph, res_adj_matrix
+
+        return res_graph
 
     def update_flow(self):
         """

@@ -13,6 +13,7 @@ from copy import deepcopy
 
 
 class BlockingFlowImageSequence(ImageSequence):
+
     """ Find blocking flow from source to sink,
         given graph and distances array.
 
@@ -20,6 +21,7 @@ class BlockingFlowImageSequence(ImageSequence):
         instead of when next_image is called.
     """
     def __init__(self, graph, nvertices, nedges, dist, source, sink):
+        # Initialize all objects
         ImageSequence.__init__(self)
         self.graph = graph
         self.edges = nedges
@@ -28,12 +30,14 @@ class BlockingFlowImageSequence(ImageSequence):
         self.source = source
         self.sink = sink
 
-        self.done = False
+        self.done = False # For GUI display
         self.states = []
         self.idx = 0
 
     def init_image(self):
+
         display_graph(self.graph, filename="blocking_flow_init")
+        # Find blocking_flow and store in self.block_flow
         self.block_flow,self.block_flow_mat = self.blocking_flow()
         self.idx = 0
         print 'found blockflow', self.block_flow
@@ -44,10 +48,12 @@ class BlockingFlowImageSequence(ImageSequence):
         if self.done:
             return None
         else:
+            # self.idx keeps track of current image displayed in GUI 
             if self.idx >= len(self.states):
                 self.done = True
                 return None
-#             print 'path', self.states[self.idx][0]
+
+            # Display the sequence of images
             display_graph(self.states[self.idx][1],
                           filename="blocking_flow_next",
                           highlight_path=self.states[self.idx][0],
@@ -66,14 +72,14 @@ class BlockingFlowImageSequence(ImageSequence):
         Finds a blocking flow of graph from source to sink.
         s - source, t - sink
         """
-        # TODO use dist array
         
+        # Store objects
         graph = self.graph
         vert = self.vertices
         edges = self.edges
         source = self.source
         sink = self.sink
-        # TODO check the complexity of below function
+
         # store the resulting graph
         final_graph_adj = np.zeros((vert, vert), dtype=np.int)
         final_graph = [[] for i in range(vert)]
@@ -96,18 +102,23 @@ class BlockingFlowImageSequence(ImageSequence):
         self.adj_matrix_capacitites = deepcopy(adj_matrix)
 
         # loop |E| times on modified DFS
+        # Loop can run maximum of |E| times
         for i in range(edges):
-            # TODO check if this is correct
-            # exit if no edge from s
+
+
+            # exit if no edge from source
             if len(graph_sets[source]) == 0:
                 break
 
+            # Find a s-t path 
             path = self.find_path(graph_sets, adj_matrix, final_graph_adj)
 
-            # Check if this is correct
+            # If no path exists then terminate the loop
             if path is None:
                 continue
 
+            # Now update the graph, using the flow for the augmenting path found
+            # Save this graph so that it can be displayed in the GUI
             for i in range(vert):
                 final_graph[i] = []
                 for j in range(len(graph[i])):
@@ -125,11 +136,10 @@ class BlockingFlowImageSequence(ImageSequence):
                 temp1, temp2 = graph[i][j]
                 final_graph[i].append((temp1, final_graph_adj[i, temp1]))
         
-#         print final_graph
-
         return final_graph, final_graph_adj
 
     def find_path(self, graph_sets, adj_matrix, final_graph_adj):
+    # Finds s-t path, returns 'None' if no such path exists
         source = self.source
         sink = self.sink
 

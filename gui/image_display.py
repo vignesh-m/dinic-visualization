@@ -9,21 +9,22 @@ class ImageSequenceRenderer(object):
     """ renders sequence of images provided by ImageSequence """
     def __init__(self, image_sequence):
 
+        # Fix the size of subplot
         fig, ax = plt.subplots(figsize=(15,10))
 
+        # Set background to be gray
         fig.patch.set_facecolor('#333333')
 
+        # Store image sequence in self.seq and display the sequence
         self.seq = image_sequence
         self.image = self.seq.init_image()
 
         plt.subplot(111)
-#         plt.title('Dinic')
         plt.axis('off')
         self.plot = plt.imshow(self.image)
 
 
 
-        # plt.subplots_adjust(bottom=0.2)
         plt.subplots_adjust(bottom=0.2)
         axnext = plt.axes([0.81, 0.05, 0.1, 0.075])
         bnext = Button(axnext, 'Next')

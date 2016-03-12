@@ -7,6 +7,7 @@
 import graphviz
 import sys
 
+# Helper function to set the graph styles
 styles = {
     'graph': {
         'label': 'Dinic',

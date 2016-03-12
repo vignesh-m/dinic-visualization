@@ -5,17 +5,15 @@ from maxflow.graph import input_graph, display_graph
 from maxflow.block_flow import BlockingFlowImageSequence
 from gui.image_display import start_gui
 
-import pdb
-
 graph, v, e = input_graph()
 display_graph(graph)
 print graph
 
-# pdb.set_trace()
-
 
 def dinic_test():
+    # Create Dinic class object
     b = DinicImageSequence(graph, v, e, 0, v - 1)
+    # Use GUI
     start_gui(b)
 
 
@@ -28,7 +26,6 @@ def blocking_flow_test():
 
 def residual_test():
     graph_zero_wt = [[] for i in range(v)]
-
     for i in range(v):
         for j in range(len(graph[i])):
             temp1, temp2 = graph[i][j]
@@ -43,6 +40,9 @@ def residual_test():
 def bfs_test():
     print find_distances(graph, 0)
 
-# bfs_test()
+
+
+# Call dinic 
 dinic_test()
+# bfs_test()
 # residual_test()

@@ -86,26 +86,28 @@ class DinicImageSequence(ImageSequence):
                     self.level_graph[i].append((j, 0))
 
     def next_image(self):
-        self.aux_text = 'current flow : %d' % self.current_flow
+        self.aux_text = 'Current flow : %d' % self.current_flow
         if self.status == 1:
             print 'in blocking flow'
             self.title = "in blocking flow"
             if self.blocking_flow.complete():
                 print 'blocking flow complete'
                 self.status = 0
-                self.title = "blocking flow complete"
+                self.title = "Blocking Flow Complete"
                 return graph_image(self.blocking_flow.block_flow,
                                    capacities=self.blocking_flow.adj_matrix_capacitites,
                                    source=self.source, sink=self.sink)
 
             _next = self.blocking_flow.next_image()
+
             self.current_flow += self.blocking_flow.current_flow
-            self.aux_text = 'current flow : %d' % self.current_flow
+            self.aux_text = 'Current flow : %d' % self.current_flow
             return _next
         else:
             self.find_residual()
             self.dist = find_distances(self.residual_graph, self.source)
             self.find_level_graph()
+            self.title = 'Finding Residual and Level Graph'
 
             if self.dist[self.sink] == INF:
                 self.done = True
@@ -114,7 +116,7 @@ class DinicImageSequence(ImageSequence):
                 return graph_image(self.graph, highlight_path=None, capacities=self.graph_capacity_adj, source=self.source, sink=self.sink)
             else:
                 # find blocking flow
-                print 'finding blocking flow'
+                print 'Finding Blocking Flow'
                 self.blocking_flow = BlockingFlowImageSequence(self.level_graph, self.vertices, self.edges, self.dist, self.source, self.sink)
                 self.status = 1
 
@@ -124,7 +126,7 @@ class DinicImageSequence(ImageSequence):
 
                 self.update_flow()
 
-                self.aux_text = 'current flow : %d' % self.current_flow
+                self.aux_text = 'Current flow : %d' % self.current_flow
                 return image
 
     def complete(self):

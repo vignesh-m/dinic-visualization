@@ -35,6 +35,7 @@ class BlockingFlowImageSequence(ImageSequence):
         self.idx = 0
         self.current_flow = 0
 
+
     def init_image(self):
 
         display_graph(self.graph, filename="blocking_flow_init", source=self.source, sink=self.sink)
@@ -43,8 +44,8 @@ class BlockingFlowImageSequence(ImageSequence):
         self.idx = 0
         self.current_flow = 0
         print 'found blockflow', self.block_flow
-
         return mpimg.imread('blocking_flow_init.png')
+
 
     def next_image(self):
         if self.done:
@@ -214,8 +215,10 @@ class BlockingFlowImageSequence(ImageSequence):
                 # Decrement path weight by minimum weight along entire path
                 # and update final_graph
                 ret_path = list(path)
+
+                current_flow += min_wt
+
                 while len(path) > 1:
-                    current_flow += min_wt
                     temp1 = path.pop()
                     temp2 = path[-1]
                     adj_matrix[temp2, temp1] = adj_matrix[temp2, temp1] - min_wt

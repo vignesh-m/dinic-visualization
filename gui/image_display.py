@@ -22,16 +22,16 @@ class ImageSequenceRenderer(object):
         self.image_figure = plt.subplot2grid((3, 3), (0, 0), colspan=3, rowspan=2)
         self.image_figure.axis('off')
         self.image_plot = self.image_figure.imshow(self.image)
-        self.image_figure.set_title('Dinic')
+        self.image_figure.set_title('Dinic', color='white')
 
         self.init_figure = plt.subplot2grid((3, 3), (2, 1))
         self.init_figure.axis('off')
         self.init_plot = plt.imshow(self.image)
-        self.init_figure.set_title('original graph')
+        self.init_figure.set_title('Original Graph' , color = 'white' )
 
         self.text_figure = plt.subplot2grid((3, 3), (2, 2))
         self.text_figure.axis('off')
-        self.text_figure.set_title('')
+        self.text_figure.set_title('',color = 'white')
 
         plt.subplots_adjust(bottom=0.2)
         axnext = plt.axes([0.81, 0.05, 0.1, 0.075])

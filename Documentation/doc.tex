@@ -240,6 +240,7 @@ T(Blocking Flow) = E \times T(DFS Routine)
 
 Each DFS routine takes $\mathcal{O}(V)$ time to find a source-sink path in each iteration. Additionally, over all the E iterations in the Blocking Flow routine, the DFS routine can delete atmost of E edges.
 
+\vspace{5mm} 
 Note that :
 
 T(DFS path finding) = $\mathcal{O}(V)$
@@ -248,14 +249,14 @@ T(DFS Deletion over E function calls) = $\mathcal{O}(E)$
 
 \begin{align}
 \begin{split}
-T(Blocking Flow) = E * T(DFS path finding) + T(DFS Deletion )
+T(Blocking Flow) = E \(\times\) T(DFS path finding) + T(DFS Deletion )
 \end{split}
 \end{align}
 
 
 \begin{align}
 \begin{split}
-\implies T(Blocking Flow) = $\mathcal{O}(VE)$
+\(\implies\) T(Blocking Flow) = $\mathcal{O}(VE)$
 \end{split}
 \end{align}
 
@@ -317,23 +318,54 @@ Delete Vertex is no source-sink path possible from Vertex
 
 %----------------------------------------------------------------------------------------
 
+
 \subsection{Correctness}
 
 \subsubsection{Termination}
-Firstly, we shall prove that the algorithm always terminates. Each iteration in the Dinic function always increases the source-sink distance by atleast one. If this is true,since the source-sink distance is less than V, termination is ensured
+Firstly, we shall prove that the algorithm always terminates. Each iteration in the Dinic function always, increases the source-sink distance in the level Graph. If this is true,since, the source-sink distance is less than V, termination is ensured
 
-Using proof by contradiction, assume that the source-sink distance does not change, after updating the graph with a blocking flow. Path present in the previous iteration cannot exist in current iteration since,
+Using proof by contradiction, assume that the source-sink distance does not change, after updating the graph with a blocking flow. Path present in the previous iteration cannot exist in current iteration since, 
 
-\vspace{5mm}
-\exists E\textsubscript{uv}, such that F\textsubscript{uv} = C\textsubscript{uv},
+\vspace{5mm} 
+\(\exists\) E\textsubscript{uv}, such that F\textsubscript{uv} = C\textsubscript{uv}, 
 
-\vspace{5mm}
+\vspace{5mm} 
 
 Hence this edge will be removed in the Residual graph and hence the path cannot be present in the next iteration.
 Hence new edge must be present in the path. Any new edge must be from Level 'i' to Level 'j' where 'i'>=j'. Note that the edges are with respect to the previous iteration. No edges can go to higher levels, by virtue of construction of the level graph. Hence since edges, are constrained by being from Level 'i' to Level 'j' where 'i'>=j', there can exist no source-sink path that is of same length as previous iteration. Hence we see that the algorithm terminates.
 
 
 \subsubsection{Correct Result}
+
+
+We shall first try to prove the following result.
+Let F be a flow-network. Also let G' = Level(Residual(G)).  Then the following three statements are equivalent :
+
+\begin{enumerate}  
+\item F is a maxflow 
+\item There is no augmenting path Graph G' 
+\item \(\exists\) X,X' \(\subset\) V where X \(\cup\) X' = V , X \(\cup\) X' = \(\emptyset\) and |flow\_val(X,X')| = capacity(X,X') 
+\end{enumerate}
+
+
+|Flow\_val(X,X')| refers to the total flow from X to X'. With C\textsubscript{uv} representing the capacity of the edge we define capacity(X,X') as :
+
+\vspace{5mm} 
+
+capacity(X,X')= \sum\limits_{\forall u,v, u \in X, v \in X'} C\textsubscript{uv} 
+
+
+\vspace{5mm} 
+Proving 1 \(\implies\) 2 is trivial, since if there existed an augmenting path, then it is possible to increase the flow along that path. Hence F will not be a maxflow.  
+
+Proving 3 \(\implies\) 1 is also an easy task. We see that the |Flow\_val(X,X')| \(\leq\) Capacity(X,X'). Also |Flow\_val(X,X')| is also equal to the source-sink flow. Hence, when both the quantities are equal, The source-sink flow must be a maximum and hence it is a maxflow.
+
+\vspace{3mm} 
+To Prove 2 \(\implies\) 3, we know that there exists no Augmenting path in G'. Hence there exists no source-sink path in the Graph G'. Let X be set of all vertices that can be reached from the source and let the rest of the vertices belong to X'. Since X and X' have no edges between them in G', all edges in G from X to X' must be saturated. Hence |flow\_val(X,X')| = capacity(X,X') for the selected X and X' proving that 2 \(\implies\) 3.
+
+\vspace{3mm} 
+Hence the above statements are proved. We already know that the algorithm terminates. When it terminates, the resultant graph has no source-sink path since , the Dinic routine loops V times and each iteration increases the Source-Sink distance by 1(Source-Sink distance \(\leq\) V-1). Hence there exists no augmenting path on termination. Hence from the earlier stated theorem, the flow is a maxflow. Hence this concludes the algorithm correctness.
+
 
 
 

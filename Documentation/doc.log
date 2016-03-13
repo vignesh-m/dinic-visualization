@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.1.26)  13 MAR 2016 22:53
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.1.26)  14 MAR 2016 00:11
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -417,18 +417,7 @@ Class scrartcl Warning: Usage of package `fancyhdr' together
 \f@ncyO@erf=\skip79
 \f@ncyO@olf=\skip80
 \f@ncyO@orf=\skip81
-)
-
-! LaTeX Error: Missing \begin{document}.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.43 k
-      \fancyfoot[L]{} % Empty left footer
-? 
-(./doc.aux
+) (./doc.aux
 
 LaTeX Warning: Label `fig:subim1' multiply defined.
 
@@ -543,10 +532,6 @@ e
 ))
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-
-[1
-
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
 LaTeX Font Info:    Try loading font information for T1+cmss on input line 77.
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmss.fd
@@ -562,13 +547,13 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 77.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-<images/p1.png, id=7, 1597.97pt x 680.5425pt>
+<images/p1.png, id=1, 1597.97pt x 680.5425pt>
 File: images/p1.png Graphic file (type png)
  <use images/p1.png>
 Package pdftex.def Info: images/p1.png used on input line 89.
 (pdftex.def)             Requested size: 199.16057pt x 113.81114pt.
 
-<images/p4.png, id=9, 1597.97pt x 612.2875pt>
+<images/p4.png, id=3, 1597.97pt x 612.2875pt>
 File: images/p4.png Graphic file (type png)
  <use images/p4.png>
 Package pdftex.def Info: images/p4.png used on input line 94.
@@ -578,7 +563,7 @@ Overfull \hbox (2.42162pt too wide) in paragraph at lines 88--98
 []$[]$ $[]$ 
  []
 
-<images/p2.png, id=10, 1597.97pt x 680.5425pt>
+<images/p2.png, id=4, 1597.97pt x 680.5425pt>
 File: images/p2.png Graphic file (type png)
  <use images/p2.png>
 Package pdftex.def Info: images/p2.png used on input line 104.
@@ -587,18 +572,20 @@ Package pdftex.def Info: images/p2.png used on input line 104.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[2
+[1
 
- <./images/p1.png> <./images/p4.png>]
-<images/p6.png, id=25, 1597.97pt x 577.15625pt>
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./images/p1.png> <./images
+/p4.png>] <images/p6.png, id=22, 1597.97pt x 577.15625pt>
 File: images/p6.png Graphic file (type png)
- <use images/p6.png>
+
+<use images/p6.png>
 Package pdftex.def Info: images/p6.png used on input line 138.
 (pdftex.def)             Requested size: 199.16057pt x 113.80876pt.
-
-<images/p5.png, id=26, 1597.97pt x 577.15625pt>
+ <images/p5.png, id=23, 1597.97pt x 577.15625pt>
 File: images/p5.png Graphic file (type png)
- <use images/p5.png>
+
+<use images/p5.png>
 Package pdftex.def Info: images/p5.png used on input line 143.
 (pdftex.def)             Requested size: 199.16057pt x 113.80876pt.
 
@@ -613,7 +600,7 @@ File: images/p5.png Graphic file (type png)
 <use images/p5.png>
 Package pdftex.def Info: images/p5.png used on input line 161.
 (pdftex.def)             Requested size: 199.16057pt x 113.80876pt.
- <images/p7.png, id=27, 1597.97pt x 577.15625pt>
+ <images/p7.png, id=24, 1597.97pt x 577.15625pt>
 File: images/p7.png Graphic file (type png)
 
 <use images/p7.png>
@@ -627,83 +614,151 @@ Overfull \hbox (2.42162pt too wide) in paragraph at lines 160--170
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[3 <./images/p2.png>] <images/p8.png, id=35, 1597.97pt x 577.15625pt>
+[2 <./images/p2.png>] <images/p8.png, id=32, 1597.97pt x 577.15625pt>
 File: images/p8.png Graphic file (type png)
 
 <use images/p8.png>
 Package pdftex.def Info: images/p8.png used on input line 181.
 (pdftex.def)             Requested size: 199.16057pt x 113.80876pt.
- [4 <./images/p6.png> <./images/p5.png> <./images/p7.png> <./images/p8.png>] <i
-mages/p9.png, id=44, 1597.97pt x 577.15625pt>
+ [3 <./images/p6.png> <./images/p5.png> <./images/p7.png> <./images/p8.png>] <i
+mages/p9.png, id=41, 1597.97pt x 577.15625pt>
 File: images/p9.png Graphic file (type png)
 
 <use images/p9.png>
 Package pdftex.def Info: images/p9.png used on input line 195.
 (pdftex.def)             Requested size: 199.16057pt x 113.80876pt.
- [5 <./images/p9.png>]
-! Missing } inserted.
-<inserted text> 
-                }
-l.260 \end{align}
-                 
-? 
+ [4 <./images/p9.png>]
 
-! LaTeX Error: \mathcal allowed only in math mode.
+! LaTeX Error: Bad math environment delimiter.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.260 \end{align}
-                 
-? 
-! Missing { inserted.
-<inserted text> 
-                {
-l.260 \end{align}
+l.254 \end{align}
                  
 ? 
 ! Missing } inserted.
 <inserted text> 
                 }
-l.260 \end{align}
-                 
-? 
-
-! LaTeX Error: \mathcal allowed only in math mode.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.260 \end{align}
+l.254 \end{align}
                  
 ? 
 ! Missing { inserted.
 <inserted text> 
                 {
-l.260 \end{align}
+l.254 \end{align}
                  
 ? 
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 283.
+! Missing $ inserted.
+<inserted text> 
+                $
+l.254 \end{align}
+                 
+? 
+
+! LaTeX Error: Bad math environment delimiter.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.254 \end{align}
+                 
+? 
+! Missing } inserted.
+<inserted text> 
+                }
+l.254 \end{align}
+                 
+? 
+! Missing { inserted.
+<inserted text> 
+                {
+l.254 \end{align}
+                 
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.254 \end{align}
+                 
+? 
+
+! LaTeX Error: Bad math environment delimiter.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.261 \end{align}
+                 
+? 
+! Missing } inserted.
+<inserted text> 
+                }
+l.261 \end{align}
+                 
+? 
+! Missing { inserted.
+<inserted text> 
+                {
+l.261 \end{align}
+                 
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.261 \end{align}
+                 
+? 
+
+! LaTeX Error: Bad math environment delimiter.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.261 \end{align}
+                 
+? 
+! Missing } inserted.
+<inserted text> 
+                }
+l.261 \end{align}
+                 
+? 
+! Missing { inserted.
+<inserted text> 
+                {
+l.261 \end{align}
+                 
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.261 \end{align}
+                 
+? 
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 284.
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-) [6]
+) [5]
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.328 \exists
-              E\textsubscript{uv}, such that F\textsubscript{uv} = C\textsub...
+l.355 capacity(X,X')= \sum
+                          \limits_{\forall u,v, u \in X, v \in X'} C\textsub...
 
 ? 
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.329 
+l.356 
       
 ? 
-[7] (./doc.aux)
+[6] [7] (./doc.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
@@ -711,7 +766,7 @@ LaTeX Warning: There were multiply-defined labels.
 Here is how much of TeX's memory you used:
  8701 strings out of 495000
  131687 string characters out of 6181169
- 379152 words of memory out of 5000000
+ 379159 words of memory out of 5000000
  11763 multiletter control sequences out of 15000+600000
  24704 words of font info for 62 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
@@ -721,20 +776,22 @@ ahul/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1095.600pk> </home/rahul/.texmf
 -var/fonts/pk/ljfour/jknappen/ec/ecti1095.600pk> </home/rahul/.texmf-var/fonts/
 pk/ljfour/jknappen/ec/ecrm0800.600pk> </home/rahul/.texmf-var/fonts/pk/ljfour/j
 knappen/ec/eccc1200.600pk> </home/rahul/.texmf-var/fonts/pk/ljfour/jknappen/ec/
-ecrm1000.600pk> </home/rahul/.texmf-var/fonts/pk/ljfour/jknappen/ec/eccc1440.60
-0pk> </home/rahul/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1440.600pk> </home
-/rahul/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm2074.600pk> </home/rahul/.tex
-mf-var/fonts/pk/ljfour/jknappen/ec/eccc1095.600pk> </home/rahul/.texmf-var/font
-s/pk/ljfour/jknappen/ec/ecrm1095.600pk></usr/share/texlive/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8
-.pfb>
-Output written on doc.pdf (7 pages, 632444 bytes).
+ecrm1000.600pk> </home/rahul/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1095.60
+0pk> </home/rahul/.texmf-var/fonts/pk/ljfour/jknappen/ec/eccc1440.600pk> </home
+/rahul/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1440.600pk> </home/rahul/.tex
+mf-var/fonts/pk/ljfour/jknappen/ec/ecrm2074.600pk> </home/rahul/.texmf-var/font
+s/pk/ljfour/jknappen/ec/eccc1095.600pk></usr/share/texlive/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8
+.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><
+/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
+Output written on doc.pdf (7 pages, 656796 bytes).
 PDF statistics:
- 415 PDF objects out of 1000 (max. 8388607)
- 78 compressed objects within 1 object stream
+ 428 PDF objects out of 1000 (max. 8388607)
+ 87 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  41 words of extra memory for PDF output out of 10000 (max. 10000000)
 

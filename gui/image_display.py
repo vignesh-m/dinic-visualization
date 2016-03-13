@@ -10,7 +10,7 @@ class ImageSequenceRenderer(object):
     def __init__(self, image_sequence):
 
         # Fix the size of subplot
-        fig, ax = plt.subplots(figsize=(15,10))
+        fig, ax = plt.subplots(figsize=(10,5))
 
         # Set background to be gray
         fig.patch.set_facecolor('#333333')

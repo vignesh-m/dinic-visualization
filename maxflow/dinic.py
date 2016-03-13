@@ -2,6 +2,7 @@
 from gui.image_display import ImageSequence
 from block_flow import BlockingFlowImageSequence
 import matplotlib.image as mpimg
+import matplotlib.pyplot as plt
 from graph import display_graph, graph_image
 import random
 import numpy as np
@@ -64,7 +65,10 @@ class DinicImageSequence(ImageSequence):
         self.status = 0
         self.blocking_flow = None
         print "dinic with", graph
-        # set init image
+
+        # display graph in subplot
+        # a = self.fig.add_subplot(1, 2, 1)
+        # plt.imshow(graph_image(graph))
 
     def init_image(self):
         # set init image
@@ -83,7 +87,7 @@ class DinicImageSequence(ImageSequence):
     def next_image(self):
         if self.status == 1:
             print 'in blocking flow'
-            self.title="in blocking flow"
+            self.title = "in blocking flow"
             if self.blocking_flow.complete():
                 print 'blocking flow complete'
                 self.status = 0

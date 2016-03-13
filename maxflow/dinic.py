@@ -104,7 +104,8 @@ class DinicImageSequence(ImageSequence):
             if self.dist[self.sink] == INF:
                 self.done = True
                 print 'completed dinics'
-                return None
+                self.title = 'Completed!'
+                return graph_image(self.graph, highlight_path=None, capacities=self.graph_capacity_adj)
             else:
                 # find blocking flow
                 print 'finding blocking flow'

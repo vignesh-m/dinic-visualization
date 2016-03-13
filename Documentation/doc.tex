@@ -123,7 +123,7 @@ A flow-network is a directed graph where the weights along each edge is sandwich
 
 Consider two vertices V\textsubscript{1} and V\textsubscript{2}. Let the flow from V\textsubscript{1} to V\textsubscript{2} to be F\textsubscript{12} along the edge E\textsubscript{12} and flow from V\textsubscript{2} to V\textsubscript{1} to be F\textsubscript{21} along the edge E\textsubscript{21}. If no edge exists from one vertex to another, then set the flow value to be 0. Also let C\textsubscript{12} and C\textsubscript{21} represent the maximum capacity of edges, E\textsubscript{12} and E\textsubscript{21}.
 
-The Residual graph contains all the vertices present in the original graph. For each pair of vertices V\textsubscript{1}' and V\textsubscript{2}' in the Residual-graph, assign the following:
+The Residual graph contains all the vertices present in the original graph. For each pair of vertices V\textsubscript{1}' and V\textsubscript{2}' in the residual graph, define the following:
 \begin{align}
 \begin{split}
 F_{12}' &= (C_{12} - F_{12} ) + C_{21}\\
@@ -131,7 +131,7 @@ F_{21}' &= (C_{21} - F_{21} ) + C_{12}\\
 \end{split}
 \end{align}
 
-Residual graph in essence, builds a graph, representing the maximum possible change in flow from V\textsubscript{1} to V\textsubscript{1} or, V\textsubscript{1} to V\textsubscript{1} constrained by the capacities. This graph is used as a tool to increase or decrease flow values along edges, in order to increase the overall source sink-flow. One can discard all edges with zero flow edges in the Residual graph.
+The residual graph in essence, builds a graph representing the maximum possible change in flow from V\textsubscript{1} to V\textsubscript{2} or, V\textsubscript{2} to V\textsubscript{1} constrained by the capacities. This graph is used as a tool to increase or decrease flow values along edges, in order to increase the overall source-sink flow. One can discard all edges with zero flow edges in the residual graph.
 
 \begin{figure}[h]
 \begin{subfigure}{0.5\textwidth}
@@ -153,7 +153,7 @@ Residual graph in essence, builds a graph, representing the maximum possible cha
 
 \subsection{Level Graph}
 
-The Level graph is a sub-graph of the residual graph. Split the vertices in the residual graph into various levels. A vertex is said to belong to level 'i' if the shortest distance from the Source vertex is 'i'. After dividing the vertices into levels, retain only those edges, which go from a level 'i' to level 'i+1'.
+The Level graph is a subgraph of the residual graph. We first partition the vertices of the residual graph into various levels. A vertex is said to belong to level $i$ if the shortest distance from the source vertex is $i$. After dividing the vertices into levels, retain only those edges, which go from a level $i$ to level $i+1$.
 
 
 \begin{figure}[h]
@@ -175,7 +175,7 @@ The Level graph is a sub-graph of the residual graph. Split the vertices in the 
 
 \subsection{Augmenting path}
 
-Given a flow-network and it's corresponding maximum capacities, an augmenting path is a source-sink path, where all the edges have the flow strictly less than the maximum capacity of the edge. Augmenting path's are used to increase the source-sink flow. If one finds an Augmenting path, then one can increase the flow along that path by Min( C\textsubscript{uv} - F\textsubscript{uv} ) for all edges E\textsubscript{uv} such that E\textsubscript{uv} belongs to the Augmenting Path. Note F\textsubscript{uv} and C\textsubscript{uv} denote the flow and capacity values. Figure \textit{2.3} highlights an augmenting path, and the flow along the path is increase by 4.
+Given a flow network and its corresponding maximum capacities, an augmenting path is a source-sink path, in which all the edges have flow strictly less than the maximum capacity of the edge. Augmenting paths can be used to increase the source-sink flow. If we find an augmenting path, then we can increase the flow along that path by Min( C\textsubscript{uv} - F\textsubscript{uv} ) for all edges E\textsubscript{uv} such that E\textsubscript{uv} belongs to the Augmenting Path. Note F\textsubscript{uv} and C\textsubscript{uv} denote the flow and capacity values. Figure \textit{2.3} highlights an augmenting path, and the flow along the path can be increased by 4.
 
 \begin{figure}[H]
 \includegraphics[width=7cm, height=4cm,center]{p8.png}
@@ -188,7 +188,7 @@ Given a flow-network and it's corresponding maximum capacities, an augmenting pa
 
 \subsection{Blocking Flow}
 
-Blocking Flow is a flow network where all possible source-sink paths have atleast one saturate edge i.e. C\textsubscript{uv} = F\textsubscript{uv} for atleast one edge E\textsubscript{uv}, along any source-sink path. Alternatively, the graph has no Augmenting Path. A blocking flow need not be a maxflow, but the converse is true.
+A blocking flow is a flow network where all possible source-sink paths have atleast one saturated edge i.e. C\textsubscript{uv} = F\textsubscript{uv} for atleast one edge E\textsubscript{uv}, along every source-sink path. Alternatively, the graph has no augmenting path. A blocking flow need not be a maxflow, but the converse is true.
 
 
 \begin{figure}[H]
@@ -228,9 +228,9 @@ Increment edges in G with values from G'\
 
 %----------------------------------------------------------------------------------------
 
-As mentioned earlier, the Run-time of the algorithm is $\mathcal{O}(V^2E)$. Finding the Level graph or Residual graph takes $\mathcal{O}(E)$ since, it suffices to iterate over all edges in the graph. A blocking flow can be found in $\mathcal{O}(VE)$. Combining these two results, we get the required complexity of the algorithm.
+As mentioned earlier, the runtime of the algorithm is $\mathcal{O}(V^2E)$. Finding the level graph or residual graph takes $\mathcal{O}(E)$ since, it suffices to iterate over all edges in the graph. A blocking flow can be found in $\mathcal{O}(VE)$. Combining these two results, we get the required complexity of the algorithm.
 
-The complexity for the blocking flow is not trivially true. The Blocking Flow routine calls the Modified DFS E times.
+The blocking flow subroutine calls a modified DFS E times.
 
 \begin{align}
 \begin{split}
@@ -296,7 +296,7 @@ Do DFS from source
 
 Stop DFS if sink is reached
 
-Delete Vertex is no Source-sink path possible from Vertex
+Delete Vertex is no source-sink path possible from Vertex
 
 \eIf{Sink encountered}{
     Augmenting\_Path = Path found from DFS
@@ -305,7 +305,7 @@ Delete Vertex is no Source-sink path possible from Vertex
 
     Augmenting\_path = None
 
-    \tcc{If Sink, never encountered then no Source-Sink path exists}
+    \tcc{If Sink is never encountered then no Source-Sink path exists}
   }
 
 \Return Augmenting\_path
@@ -320,7 +320,7 @@ Delete Vertex is no Source-sink path possible from Vertex
 \subsection{Correctness}
 
 \subsubsection{Termination}
-Firstly, we shall prove that the algorithm always terminates. Each iteration in the Dinic function always, increases the source-sink distance in the level Graph. If this is true,since, the source-sink distance is less than V, termination is ensured
+Firstly, we shall prove that the algorithm always terminates. Each iteration in the Dinic function always increases the source-sink distance by atleast one. If this is true,since the source-sink distance is less than V, termination is ensured
 
 Using proof by contradiction, assume that the source-sink distance does not change, after updating the graph with a blocking flow. Path present in the previous iteration cannot exist in current iteration since,
 

@@ -29,6 +29,9 @@ class ImageSequenceRenderer(object):
         self.init_plot = plt.imshow(self.image)
         self.init_figure.set_title('original graph')
 
+        self.text_figure = plt.subplot2grid((3, 3), (2, 2))
+        self.text_figure.axis('off')
+        self.text_figure.set_title('')
 
         plt.subplots_adjust(bottom=0.2)
         axnext = plt.axes([0.81, 0.05, 0.1, 0.075])
@@ -45,7 +48,8 @@ class ImageSequenceRenderer(object):
         self.image = self.seq.next_image()
         if self.image is not None:
             self.image_plot.set_data(self.image)
-            self.image_figure.set_title(getattr(self.seq,'title',"Dinic"))
+            self.image_figure.set_title(getattr(self.seq, 'title', "Dinic"))
+            self.text_figure.set_title(getattr(self.seq, 'aux_text', ""))
             plt.draw()
 
 

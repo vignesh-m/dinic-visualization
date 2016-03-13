@@ -30,16 +30,18 @@ class BlockingFlowImageSequence(ImageSequence):
         self.source = source
         self.sink = sink
 
-        self.done = False # For GUI display
+        self.done = False  # For GUI display
         self.states = []
         self.idx = 0
+        self.current_flow = 0
 
     def init_image(self):
 
         display_graph(self.graph, filename="blocking_flow_init")
         # Find blocking_flow and store in self.block_flow
-        self.block_flow,self.block_flow_mat = self.blocking_flow()
+        self.block_flow, self.block_flow_mat = self.blocking_flow()
         self.idx = 0
+        self.current_flow = 0
         print 'found blockflow', self.block_flow
 
         return mpimg.imread('blocking_flow_init.png')
@@ -48,7 +50,7 @@ class BlockingFlowImageSequence(ImageSequence):
         if self.done:
             return None
         else:
-            # self.idx keeps track of current image displayed in GUI 
+            # self.idx keeps track of current image displayed in GUI
             if self.idx >= len(self.states):
                 self.done = True
                 return None
@@ -58,7 +60,11 @@ class BlockingFlowImageSequence(ImageSequence):
                           filename="blocking_flow_next",
                           highlight_path=self.states[self.idx][0],
                           capacities=self.adj_matrix_capacitites)
+            self.current_flow = self.states[self.idx][2]
+            print 'curr state', self.states[self.idx]
             self.idx += 1
+            if self.idx >= len(self.states):
+                self.done = True
             return mpimg.imread('blocking_flow_next.png')
 
     def complete(self):
@@ -72,7 +78,7 @@ class BlockingFlowImageSequence(ImageSequence):
         Finds a blocking flow of graph from source to sink.
         s - source, t - sink
         """
-        
+
         # Store objects
         graph = self.graph
         vert = self.vertices
@@ -104,15 +110,12 @@ class BlockingFlowImageSequence(ImageSequence):
         # loop |E| times on modified DFS
         # Loop can run maximum of |E| times
         for i in range(edges):
-
-
             # exit if no edge from source
             if len(graph_sets[source]) == 0:
                 break
 
-            # Find a s-t path 
-            path = self.find_path(graph_sets, adj_matrix, final_graph_adj)
-
+            # Find a s-t path
+            path, self.current_flow = self.find_path(graph_sets, adj_matrix, final_graph_adj)
             # If no path exists then terminate the loop
             if path is None:
                 continue
@@ -124,8 +127,8 @@ class BlockingFlowImageSequence(ImageSequence):
                 for j in range(len(graph[i])):
                     temp1, temp2 = graph[i][j]
                     final_graph[i].append((temp1, final_graph_adj[i, temp1]))
-            self.states.append((path, deepcopy(final_graph)))
-#             print 'found path', path
+            self.states.append((path, deepcopy(final_graph), self.current_flow))
+            print 'found path', path
 
         # final_graph_adj stores the weights of each edge in the blocking flow graph
         # final_graph contains the blocking flow graph in reqd. format
@@ -135,11 +138,13 @@ class BlockingFlowImageSequence(ImageSequence):
             for j in range(len(graph[i])):
                 temp1, temp2 = graph[i][j]
                 final_graph[i].append((temp1, final_graph_adj[i, temp1]))
-        
+
         return final_graph, final_graph_adj
 
     def find_path(self, graph_sets, adj_matrix, final_graph_adj):
-    # Finds s-t path, returns 'None' if no such path exists
+        """
+        Finds s-t path, returns 'None' if no such path exists
+        """
         source = self.source
         sink = self.sink
 
@@ -148,6 +153,7 @@ class BlockingFlowImageSequence(ImageSequence):
         path.append(source)
 
         ret_path = None
+        current_flow = 0
 
         # finds a single s-t path and updates residues along that path.
         while True:
@@ -190,29 +196,30 @@ class BlockingFlowImageSequence(ImageSequence):
             # else path augmentation with child
             # update path and min_wt in path
 
-
             path.append(child)
 
             # if s-t path is found
             if child == sink:
 
                 # Find min_wt
-                min_wt= float('inf')
+                min_wt = float('inf')
 
                 path_edges = zip(path, path[1:])
 
-                for i,j in path_edges:
-                    if adj_matrix[i,j] < min_wt:
-                        min_wt = adj_matrix[i,j]
+                for i, j in path_edges:
+                    if adj_matrix[i, j] < min_wt:
+                        min_wt = adj_matrix[i, j]
 
                 # Decrement path weight by minimum weight along entire path
                 # and update final_graph
                 ret_path = list(path)
                 while len(path) > 1:
+                    current_flow += min_wt
                     temp1 = path.pop()
                     temp2 = path[-1]
                     adj_matrix[temp2, temp1] = adj_matrix[temp2, temp1] - min_wt
                     final_graph_adj[temp2, temp1] = final_graph_adj[temp2, temp1] + min_wt
+                print 'path', ret_path
+                print 'current_flow', current_flow
                 break
-        return ret_path
-
+        return ret_path, current_flow

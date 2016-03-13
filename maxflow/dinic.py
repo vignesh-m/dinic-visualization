@@ -64,6 +64,7 @@ class DinicImageSequence(ImageSequence):
         # status=1 when blocking flow is in progress
         self.status = 0
         self.blocking_flow = None
+        self.current_flow = 0
         print "dinic with", graph
 
         # display graph in subplot
@@ -85,6 +86,7 @@ class DinicImageSequence(ImageSequence):
                     self.level_graph[i].append((j, 0))
 
     def next_image(self):
+        self.aux_text = 'current flow : %d' % self.current_flow
         if self.status == 1:
             print 'in blocking flow'
             self.title = "in blocking flow"
@@ -94,7 +96,10 @@ class DinicImageSequence(ImageSequence):
                 self.title = "blocking flow complete"
                 return graph_image(self.blocking_flow.block_flow,
                                    capacities=self.blocking_flow.adj_matrix_capacitites)
+
             _next = self.blocking_flow.next_image()
+            self.current_flow += self.blocking_flow.current_flow
+            self.aux_text = 'current flow : %d' % self.current_flow
             return _next
         else:
             self.find_residual()
@@ -118,6 +123,7 @@ class DinicImageSequence(ImageSequence):
 
                 self.update_flow()
 
+                self.aux_text = 'current flow : %d' % self.current_flow
                 return image
 
     def complete(self):

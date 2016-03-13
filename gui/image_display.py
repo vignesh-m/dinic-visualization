@@ -10,20 +10,28 @@ class ImageSequenceRenderer(object):
     def __init__(self, image_sequence):
 
         # Fix the size of subplot
-        fig, ax = plt.subplots(figsize=(15,10))
+        self.fig, self.axes = plt.subplots(2, sharey=True, figsize=(10, 5))
 
         # Set background to be gray
-        fig.patch.set_facecolor('#333333')
+        self.fig.patch.set_facecolor('#333333')
 
         # Store image sequence in self.seq and display the sequence
         self.seq = image_sequence
         self.image = self.seq.init_image()
 
-        plt.subplot(111)
-        plt.axis('off')
-        self.plot = plt.imshow(self.image)
+        self.image_figure = plt.subplot2grid((3, 3), (0, 0), colspan=3, rowspan=2)
+        self.image_figure.axis('off')
+        self.image_plot = self.image_figure.imshow(self.image)
+        self.image_figure.set_title('Dinic')
 
+        self.init_figure = plt.subplot2grid((3, 3), (2, 1))
+        self.init_figure.axis('off')
+        self.init_plot = plt.imshow(self.image)
+        self.init_figure.set_title('original graph')
 
+        self.text_figure = plt.subplot2grid((3, 3), (2, 2))
+        self.text_figure.axis('off')
+        self.text_figure.set_title('')
 
         plt.subplots_adjust(bottom=0.2)
         axnext = plt.axes([0.81, 0.05, 0.1, 0.075])
@@ -34,13 +42,14 @@ class ImageSequenceRenderer(object):
 
     def next(self, event):
         if self.seq.complete():
-            plt.subplot(111)
-            plt.title('Completed!')  # TODO better way to show it has completed
+            self.image_figure.set_title('Completed!')  # TODO better way to show it has completed
             plt.draw()
             return
         self.image = self.seq.next_image()
         if self.image is not None:
-            self.plot.set_data(self.image)
+            self.image_plot.set_data(self.image)
+            self.image_figure.set_title(getattr(self.seq, 'title', "Dinic"))
+            self.text_figure.set_title(getattr(self.seq, 'aux_text', ""))
             plt.draw()
 
 

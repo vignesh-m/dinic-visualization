@@ -12,21 +12,34 @@ digraph {
 		2
 		3
 		4
+		5
+		6
 		0 [fillcolor="#FF9900"]
-		5 [fillcolor="#FF9900"]
-			0 -> 1 [label="5 / 5" color="#FF9900" fontcolor=white]
-			0 -> 2 [label="0 / 1" color=white fontcolor=white style=solid]
+		7 [fillcolor="#FF9900"]
+			0 -> 2 [label="2 / 8" color="#FF9900" fontcolor=white]
+			0 -> 3 [label="0 / 10" color=white fontcolor=white style=solid]
 			1 -> 0 [label="0 / 0" color="#444444" fontcolor="#333333" style=dashed]
 			1 -> 2 [label="0 / 0" color="#444444" fontcolor="#333333" style=dashed]
-			1 -> 4 [label="5 / 7" color="#FF9900" fontcolor=white]
+			1 -> 4 [label="0 / 0" color="#444444" fontcolor="#333333" style=dashed]
+			1 -> 6 [label="2 / 2" color="#FF9900" fontcolor=white]
 			2 -> 0 [label="0 / 0" color="#444444" fontcolor="#333333" style=dashed]
-			3 -> 1 [label="0 / 0" color="#444444" fontcolor="#333333" style=dashed]
-			3 -> 5 [label="5 / 6" color="#FF9900" fontcolor=white]
-			4 -> 1 [label="0 / 0" color="#444444" fontcolor="#333333" style=dashed]
+			2 -> 3 [label="0 / 0" color="#444444" fontcolor="#333333" style=dashed]
+			2 -> 4 [label="2 / 7" color="#FF9900" fontcolor=white]
+			3 -> 0 [label="0 / 0" color="#444444" fontcolor="#333333" style=dashed]
+			3 -> 4 [label="0 / 3" color=white fontcolor=white style=solid]
+			4 -> 1 [label="2 / 5" color="#FF9900" fontcolor=white]
 			4 -> 2 [label="0 / 0" color="#444444" fontcolor="#333333" style=dashed]
-			4 -> 3 [label="5 / 6" color="#FF9900" fontcolor=white]
-			5 -> 3 [label="0 / 0" color="#444444" fontcolor="#333333" style=dashed]
+			4 -> 3 [label="0 / 0" color="#444444" fontcolor="#333333" style=dashed]
+			4 -> 5 [label="0 / 8" color=white fontcolor=white style=solid]
 			5 -> 4 [label="0 / 0" color="#444444" fontcolor="#333333" style=dashed]
+			6 -> 1 [label="0 / 0" color="#444444" fontcolor="#333333" style=dashed]
+			6 -> 4 [label="0 / 0" color="#444444" fontcolor="#333333" style=dashed]
+			6 -> 5 [label="0 / 0" color="#444444" fontcolor="#333333" style=dashed]
+			6 -> 7 [label="2 / 2" color="#FF9900" fontcolor=white]
+			7 -> 3 [label="0 / 0" color="#444444" fontcolor="#333333" style=dashed]
+			7 -> 4 [label="0 / 0" color="#444444" fontcolor="#333333" style=dashed]
+			7 -> 5 [label="0 / 0" color="#444444" fontcolor="#333333" style=dashed]
+			7 -> 6 [label="0 / 0" color="#444444" fontcolor="#333333" style=dashed]
 	fontsize=30
 	label = "\nDinic"
 }

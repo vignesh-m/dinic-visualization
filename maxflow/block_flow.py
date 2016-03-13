@@ -37,7 +37,7 @@ class BlockingFlowImageSequence(ImageSequence):
 
     def init_image(self):
 
-        display_graph(self.graph, filename="blocking_flow_init")
+        display_graph(self.graph, filename="blocking_flow_init", source=self.source, sink=self.sink)
         # Find blocking_flow and store in self.block_flow
         self.block_flow, self.block_flow_mat = self.blocking_flow()
         self.idx = 0
@@ -59,7 +59,8 @@ class BlockingFlowImageSequence(ImageSequence):
             display_graph(self.states[self.idx][1],
                           filename="blocking_flow_next",
                           highlight_path=self.states[self.idx][0],
-                          capacities=self.adj_matrix_capacitites)
+                          capacities=self.adj_matrix_capacitites,
+                          source=self.source, sink=self.sink)
             self.current_flow = self.states[self.idx][2]
             print 'curr state', self.states[self.idx]
             self.idx += 1

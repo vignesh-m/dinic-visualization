@@ -73,7 +73,7 @@ class DinicImageSequence(ImageSequence):
 
     def init_image(self):
         # set init image
-        display_graph(self.graph, 'dinic_init')
+        display_graph(self.graph, 'dinic_init', source=self.source, sink=self.sink)
         return mpimg.imread('dinic_init.png')
 
     def find_level_graph(self):
@@ -95,7 +95,8 @@ class DinicImageSequence(ImageSequence):
                 self.status = 0
                 self.title = "blocking flow complete"
                 return graph_image(self.blocking_flow.block_flow,
-                                   capacities=self.blocking_flow.adj_matrix_capacitites)
+                                   capacities=self.blocking_flow.adj_matrix_capacitites,
+                                   source=self.source, sink=self.sink)
 
             _next = self.blocking_flow.next_image()
             self.current_flow += self.blocking_flow.current_flow
@@ -110,7 +111,7 @@ class DinicImageSequence(ImageSequence):
                 self.done = True
                 print 'completed dinics'
                 self.title = 'Completed!'
-                return graph_image(self.graph, highlight_path=None, capacities=self.graph_capacity_adj)
+                return graph_image(self.graph, highlight_path=None, capacities=self.graph_capacity_adj, source=self.source, sink=self.sink)
             else:
                 # find blocking flow
                 print 'finding blocking flow'

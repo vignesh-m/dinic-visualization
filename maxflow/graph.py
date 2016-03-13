@@ -58,7 +58,8 @@ def input_graph(input_file=sys.stdin):
     return graph, n, m
 
 
-def display_graph(graph, filename="graphviz_output", highlight_path=None, capacities=None):
+def display_graph(graph, filename="graphviz_output", highlight_path=None, capacities=None,
+                  source=0, sink=None):
 
     """ simply displays a graph using graphviz.
     renders to filename.png
@@ -124,7 +125,7 @@ def display_graph(graph, filename="graphviz_output", highlight_path=None, capaci
 
 
 
-    dot = graphviz.Digraph(comment="max flow graph", format='png',engine='neato')
+    dot = graphviz.Digraph(comment="max flow graph", format='png', engine='neato')
 
 #     dot.attr('node', shape='doublecircle')
 
@@ -139,9 +140,10 @@ def display_graph(graph, filename="graphviz_output", highlight_path=None, capaci
     n = len(graph)
     for i in map(str, range(1, n - 1)):
         dot.node(i)
-
-    dot.node('0', fillcolor='#FF9900')
-    dot.node(str(n-1), fillcolor='#FF9900')
+    if sink is None:
+        sink = n - 1
+    dot.node(str(source), fillcolor='#FF9900')
+    dot.node(str(sink), fillcolor='#FF9900')
 
     if highlight_path:
         path_edges = zip(highlight_path, highlight_path[1:])
@@ -161,7 +163,7 @@ def display_graph(graph, filename="graphviz_output", highlight_path=None, capaci
     dot.render(filename)
 
 
-def graph_image(graph, highlight_path=None, capacities=None):
+def graph_image(graph, highlight_path=None, capacities=None, source=0, sink=None):
     """
         Convert graph to image and returns the image
     """

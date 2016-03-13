@@ -11,8 +11,10 @@ print graph
 
 
 def dinic_test():
+    sink, source = map(int, raw_input().split())
     # Create Dinic class object
-    b = DinicImageSequence(graph, v, e, 0, v - 1)
+    print sink, source
+    b = DinicImageSequence(graph, v, e, sink, source)
     # Use GUI
     start_gui(b)
 
@@ -42,7 +44,7 @@ def bfs_test():
 
 
 
-# Call dinic 
+# Call dinic
 dinic_test()
 # bfs_test()
 # residual_test()

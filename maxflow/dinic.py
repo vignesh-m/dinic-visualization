@@ -2,7 +2,7 @@
 from gui.image_display import ImageSequence
 from block_flow import BlockingFlowImageSequence
 import matplotlib.image as mpimg
-from graph import display_graph
+from graph import display_graph, graph_image
 import random
 import numpy as np
 from Queue import Queue
@@ -25,6 +25,7 @@ def find_distances(graph, source):
                 q.put(t[0])
     return dist
 
+
 class DinicImageSequence(ImageSequence):
     """ dinic image sequence """
 
@@ -39,7 +40,7 @@ class DinicImageSequence(ImageSequence):
             for j in range(len(graph[i])):
                 temp1, temp2 = graph[i][j]
                 self.graph[i].append((temp1, 0))
-                self.graph_adj[i,temp1] = 0
+                self.graph_adj[i, temp1] = 0
 
         # Stores maximum capcities
 
@@ -48,7 +49,6 @@ class DinicImageSequence(ImageSequence):
             for j in range(len(graph[i])):
                 temp1, temp2 = graph[i][j]
                 self.graph_capacity_adj[i, temp1] = temp2
-
 
         self.residual_graph = graph
 
@@ -83,9 +83,14 @@ class DinicImageSequence(ImageSequence):
     def next_image(self):
         if self.status == 1:
             print 'in blocking flow'
-            _next = self.blocking_flow.next_image()
+            self.title="in blocking flow"
             if self.blocking_flow.complete():
+                print 'blocking flow complete'
                 self.status = 0
+                self.title = "blocking flow complete"
+                return graph_image(self.blocking_flow.block_flow,
+                                   capacities=self.blocking_flow.adj_matrix_capacitites)
+            _next = self.blocking_flow.next_image()
             return _next
         else:
             self.find_residual()
@@ -125,7 +130,6 @@ class DinicImageSequence(ImageSequence):
         # Capacity graph adj matrix
         wt_adj_matrix = deepcopy(self.graph_capacity_adj)
 
-
         # original graph adjacency matrix
         adj_matrix = np.zeros((vert, vert), dtype=np.int)
 
@@ -133,7 +137,6 @@ class DinicImageSequence(ImageSequence):
             for j in range(len(self.graph[i])):
                 temp1, temp2 = self.graph[i][j]
                 adj_matrix[i, temp1] = temp2
-
 
         # Find residual graph
         for i in range(self.vertices):
@@ -156,7 +159,7 @@ class DinicImageSequence(ImageSequence):
         """
         Update self.graph etc, after getting a blocking_flow
         """
-        self.graph_adj = self.graph_adj + self.block_flow_adj 
+        self.graph_adj = self.graph_adj + self.block_flow_adj
         temp = deepcopy(self.graph)
 
         for i in range(self.vertices):
@@ -166,4 +169,3 @@ class DinicImageSequence(ImageSequence):
                 temp[i].append((t1, self.graph_adj[i, t1]))
 
         self.graph = temp
-

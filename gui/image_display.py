@@ -41,6 +41,7 @@ class ImageSequenceRenderer(object):
         self.image = self.seq.next_image()
         if self.image is not None:
             self.plot.set_data(self.image)
+            plt.title(getattr(self.seq,'title',"Dinic"))
             plt.draw()
 
 

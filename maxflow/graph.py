@@ -6,6 +6,7 @@
 """
 import graphviz
 import sys
+import matplotlib.image as mpimg
 
 # Helper function to set the graph styles
 styles = {
@@ -85,7 +86,7 @@ def display_graph(graph, filename="graphviz_output", highlight_path=None, capaci
                 return '#444444'#333333'
 
         return 'white'
-    
+
     def style_dot(edge,weight,capacities):
         if capacities is not None:
             if capacities[edge] == 0 :
@@ -94,7 +95,7 @@ def display_graph(graph, filename="graphviz_output", highlight_path=None, capaci
                 return 'solid'
         else:
             if weight==0:
-                return 'solid' 
+                return 'solid'
 
         return 'solid'
     def font_dot(edge,weight,capacities):
@@ -126,7 +127,7 @@ def display_graph(graph, filename="graphviz_output", highlight_path=None, capaci
     dot = graphviz.Digraph(comment="max flow graph", format='png',engine='neato')
 
 #     dot.attr('node', shape='doublecircle')
-    
+
     dot.body.append('size="20,8"')
     dot.body.append('rankdir="LR"')
     dot.body.append('ratio="fill"')
@@ -136,13 +137,11 @@ def display_graph(graph, filename="graphviz_output", highlight_path=None, capaci
 #     assume source and sink are 0 and n-1
 
     n = len(graph)
-    for i in map(str, range(1,n-1)):
+    for i in map(str, range(1, n - 1)):
         dot.node(i)
 
-    dot.node('0',fillcolor='#FF9900')
-    dot.node(str(n-1),fillcolor='#FF9900')
-    
-
+    dot.node('0', fillcolor='#FF9900')
+    dot.node(str(n-1), fillcolor='#FF9900')
 
     if highlight_path:
         path_edges = zip(highlight_path, highlight_path[1:])
@@ -155,7 +154,6 @@ def display_graph(graph, filename="graphviz_output", highlight_path=None, capaci
             else:
                 dot.edge(str(i), str(j), label=label((i, j), c, capacities), color=color_dot((i,j),c,capacities), fontcolor = font_dot((i,j),c,capacities),style = style_dot((i,j),c,capacities))
 
-
     dot.body.append('fontsize=30')
     dot.body.append(r'label = "\nDinic"')
 
@@ -163,5 +161,11 @@ def display_graph(graph, filename="graphviz_output", highlight_path=None, capaci
     dot.render(filename)
 
 
-
-    
+def graph_image(graph, highlight_path=None, capacities=None):
+    """
+        Convert graph to image and returns the image
+    """
+    filename = "_graph_image_"
+    display_graph(graph, filename=filename,
+                  highlight_path=highlight_path, capacities=capacities)
+    return mpimg.imread(filename + '.png')

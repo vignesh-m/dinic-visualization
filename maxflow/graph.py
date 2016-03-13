@@ -11,7 +11,6 @@ import matplotlib.image as mpimg
 # Helper function to set the graph styles
 styles = {
     'graph': {
-        'label': 'Dinic',
         'fontsize': '16',
         'fontcolor': 'white',
         'bgcolor': '#333333',
@@ -140,8 +139,10 @@ def display_graph(graph, filename="graphviz_output", highlight_path=None, capaci
     n = len(graph)
     for i in map(str, range(1, n - 1)):
         dot.node(i)
+
     if sink is None:
         sink = n - 1
+
     dot.node(str(source), fillcolor='#FF9900')
     dot.node(str(sink), fillcolor='#FF9900')
 
@@ -156,9 +157,6 @@ def display_graph(graph, filename="graphviz_output", highlight_path=None, capaci
             else:
                 dot.edge(str(i), str(j), label=label((i, j), c, capacities), color=color_dot((i,j),c,capacities), fontcolor = font_dot((i,j),c,capacities),style = style_dot((i,j),c,capacities))
 
-    dot.body.append('fontsize=30')
-    dot.body.append(r'label = "\nDinic"')
-
     dot = apply_styles(dot, styles)
     dot.render(filename)
 
@@ -169,5 +167,5 @@ def graph_image(graph, highlight_path=None, capacities=None, source=0, sink=None
     """
     filename = "_graph_image_"
     display_graph(graph, filename=filename,
-                  highlight_path=highlight_path, capacities=capacities)
+                  highlight_path=highlight_path, capacities=capacities,source = source,sink = sink)
     return mpimg.imread(filename + '.png')

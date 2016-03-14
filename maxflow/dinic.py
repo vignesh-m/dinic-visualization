@@ -73,7 +73,12 @@ class DinicImageSequence(ImageSequence):
 
     def init_image(self):
         # set init image
-        display_graph(self.graph, 'dinic_init', source=self.source, sink=self.sink)
+        display_graph(self.residual_graph, 'dinic_init', source=self.source, sink=self.sink, size_graph = 'l')
+        return mpimg.imread('dinic_init.png')
+
+    def init_image_original(self):
+        # set init image
+        display_graph(self.residual_graph, 'dinic_init', source=self.source, sink=self.sink, size_graph = 's')
         return mpimg.imread('dinic_init.png')
 
     def find_level_graph(self):

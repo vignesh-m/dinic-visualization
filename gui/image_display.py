@@ -18,6 +18,7 @@ class ImageSequenceRenderer(object):
         # Store image sequence in self.seq and display the sequence
         self.seq = image_sequence
         self.image = self.seq.init_image()
+        self.image2 = self.seq.init_image_original()
 
         self.image_figure = plt.subplot2grid((3, 3), (0, 0), colspan=3, rowspan=2)
         self.image_figure.axis('off')
@@ -26,7 +27,7 @@ class ImageSequenceRenderer(object):
 
         self.init_figure = plt.subplot2grid((3, 3), (2, 1))
         self.init_figure.axis('off')
-        self.init_plot = plt.imshow(self.image)
+        self.init_plot = plt.imshow(self.image2)
         self.init_figure.set_title('Original Graph' , color = 'white' )
 
         self.text_figure = plt.subplot2grid((3, 3), (2, 2))
@@ -48,6 +49,7 @@ class ImageSequenceRenderer(object):
         self.image = self.seq.next_image()
         if self.image is not None:
             self.image_plot.set_data(self.image)
+
             self.image_figure.set_title(getattr(self.seq, 'title', "Dinic"))
             self.text_figure.set_title(getattr(self.seq, 'aux_text', ""))
             plt.draw()
@@ -61,6 +63,9 @@ class ImageSequence(object):
         self.pics = map(mpimg.imread, ['bw.png', 'hello.jpg'])
 
     def init_image(self):
+        return self.pics[self.i]
+
+    def init_image_original(self):
         return self.pics[self.i]
 
     def next_image(self):

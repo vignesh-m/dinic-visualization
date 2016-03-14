@@ -23,6 +23,7 @@ styles = {
         'color': 'white',
         'style': 'filled',
         'fillcolor': '#006699',
+        'shape' : 'doublecircle',
     },
     'edges': {
         'color': 'white',
@@ -34,6 +35,34 @@ styles = {
     }
 }
 
+styles2 = {
+    'graph': {
+        'fontsize': '16',
+        'fontcolor': 'white',
+        'bgcolor': '#333333',
+        'rankdir': 'BT',
+    },
+    'nodes': {
+        'fontname': 'Helvetica',
+        'fontsize': '20',
+        'fontcolor': 'white',
+        'color': 'white',
+        'style': 'filled',
+        'fillcolor': '#006699',
+        'shape' : 'doublecircle',
+        'fixedsize' : 'true',
+        'width' : '0.5',
+        'height' : '0.5'
+    },
+    'edges': {
+        'color': 'white',
+        'arrowhead': 'open',
+        'arrowsize':'.5',
+        'fontname': 'Helvetica',
+        'fontsize': '20',
+        'fontcolor': 'white',
+    }
+}
 
 def input_graph(input_file=sys.stdin):
     """ read graph from file.
@@ -58,7 +87,7 @@ def input_graph(input_file=sys.stdin):
 
 
 def display_graph(graph, filename="graphviz_output", highlight_path=None, capacities=None,
-                  source=0, sink=None):
+                  source=0, sink=None,size_graph = 'l'):
 
     """ simply displays a graph using graphviz.
     renders to filename.png
@@ -128,7 +157,10 @@ def display_graph(graph, filename="graphviz_output", highlight_path=None, capaci
 
 #     dot.attr('node', shape='doublecircle')
 
-    dot.body.append('size="20,8"')
+    if size_graph == 'l':
+        dot.body.append('size= "12,6"')
+    else:
+        dot.body.append('size= "5,2.2"')
     dot.body.append('rankdir="LR"')
     dot.body.append('ratio="fill"')
     dot.body.append('overlap ="true"')
@@ -157,7 +189,10 @@ def display_graph(graph, filename="graphviz_output", highlight_path=None, capaci
             else:
                 dot.edge(str(i), str(j), label=label((i, j), c, capacities), color=color_dot((i,j),c,capacities), fontcolor = font_dot((i,j),c,capacities),style = style_dot((i,j),c,capacities))
 
-    dot = apply_styles(dot, styles)
+    if size_graph == 'l':
+        dot = apply_styles(dot, styles)
+    else:
+        dot = apply_styles(dot, styles2)
     dot.render(filename)
 
 

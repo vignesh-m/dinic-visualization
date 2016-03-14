@@ -1,9 +1,9 @@
 // max flow graph
 digraph {
-	graph [bgcolor="#333333" fontcolor=white fontsize=16 label=Dinic rankdir=BT]
-	node [color=white fillcolor="#006699" fontcolor=white fontname=Helvetica fontsize=30 style=filled]
+	graph [bgcolor="#333333" fontcolor=white fontsize=16 rankdir=BT]
+	node [color=white fillcolor="#006699" fontcolor=white fontname=Helvetica fontsize=30 shape=doublecircle style=filled]
 	edge [arrowhead=open arrowsize=2.5 color=white fontcolor=white fontname=Helvetica fontsize=30]
-	size="20,8"
+	size= "12,6"
 	rankdir="LR"
 	ratio="fill"
 	overlap ="true"
@@ -40,6 +40,4 @@ digraph {
 			7 -> 4 [label="0 / 0" color="#444444" fontcolor="#333333" style=dashed]
 			7 -> 5 [label="0 / 0" color="#444444" fontcolor="#333333" style=dashed]
 			7 -> 6 [label="0 / 0" color="#444444" fontcolor="#333333" style=dashed]
-	fontsize=30
-	label = "\nDinic"
 }

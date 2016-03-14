@@ -1,9 +1,9 @@
 // max flow graph
 digraph {
-	graph [bgcolor="#333333" fontcolor=white fontsize=16 label=Dinic rankdir=BT]
-	node [color=white fillcolor="#006699" fontcolor=white fontname=Helvetica fontsize=30 style=filled]
-	edge [arrowhead=open arrowsize=2.5 color=white fontcolor=white fontname=Helvetica fontsize=30]
-	size="20,8"
+	graph [bgcolor="#333333" fontcolor=white fontsize=16 rankdir=BT]
+	node [color=white fillcolor="#006699" fixedsize=true fontcolor=white fontname=Helvetica fontsize=20 height=0.5 shape=doublecircle style=filled width=0.5]
+	edge [arrowhead=open arrowsize=.5 color=white fontcolor=white fontname=Helvetica fontsize=20]
+	size= "5,2.2"
 	rankdir="LR"
 	ratio="fill"
 	overlap ="true"
@@ -16,22 +16,20 @@ digraph {
 		6
 		0 [fillcolor="#FF9900"]
 		7 [fillcolor="#FF9900"]
-			0 -> 1 [label=0 color="#444444" fontcolor="#333333" style=solid]
-			0 -> 2 [label=0 color="#444444" fontcolor="#333333" style=solid]
-			0 -> 3 [label=0 color="#444444" fontcolor="#333333" style=solid]
-			1 -> 2 [label=0 color="#444444" fontcolor="#333333" style=solid]
-			1 -> 6 [label=0 color="#444444" fontcolor="#333333" style=solid]
-			1 -> 4 [label=0 color="#444444" fontcolor="#333333" style=solid]
-			2 -> 4 [label=0 color="#444444" fontcolor="#333333" style=solid]
-			2 -> 3 [label=0 color="#444444" fontcolor="#333333" style=solid]
-			3 -> 4 [label=0 color="#444444" fontcolor="#333333" style=solid]
-			3 -> 7 [label=0 color="#444444" fontcolor="#333333" style=solid]
-			4 -> 5 [label=0 color="#444444" fontcolor="#333333" style=solid]
-			4 -> 6 [label=0 color="#444444" fontcolor="#333333" style=solid]
-			4 -> 7 [label=0 color="#444444" fontcolor="#333333" style=solid]
-			5 -> 7 [label=0 color="#444444" fontcolor="#333333" style=solid]
-			6 -> 5 [label=0 color="#444444" fontcolor="#333333" style=solid]
-			6 -> 7 [label=0 color="#444444" fontcolor="#333333" style=solid]
-	fontsize=30
-	label = "\nDinic"
+			0 -> 1 [label=10 color=white fontcolor=white style=solid]
+			0 -> 2 [label=10 color=white fontcolor=white style=solid]
+			0 -> 3 [label=15 color=white fontcolor=white style=solid]
+			1 -> 2 [label=2 color=white fontcolor=white style=solid]
+			1 -> 6 [label=7 color=white fontcolor=white style=solid]
+			1 -> 4 [label=8 color=white fontcolor=white style=solid]
+			2 -> 4 [label=9 color=white fontcolor=white style=solid]
+			2 -> 3 [label=5 color=white fontcolor=white style=solid]
+			3 -> 4 [label=6 color=white fontcolor=white style=solid]
+			3 -> 7 [label=2 color=white fontcolor=white style=solid]
+			4 -> 5 [label=10 color=white fontcolor=white style=solid]
+			4 -> 6 [label=3 color=white fontcolor=white style=solid]
+			4 -> 7 [label=5 color=white fontcolor=white style=solid]
+			5 -> 7 [label=2 color=white fontcolor=white style=solid]
+			6 -> 5 [label=4 color=white fontcolor=white style=solid]
+			6 -> 7 [label=10 color=white fontcolor=white style=solid]
 }

@@ -28,7 +28,7 @@ class ImageSequenceRenderer(object):
         self.init_figure = plt.subplot2grid((3, 3), (2, 1))
         self.init_figure.axis('off')
         self.init_plot = plt.imshow(self.image2)
-        self.init_figure.set_title('Original Graph' , color = 'white' )
+        self.init_figure.set_title('Flow Graph', color = 'white' )
 
         self.text_figure = plt.subplot2grid((3, 3), (2, 2))
         self.text_figure.axis('off')
@@ -46,12 +46,14 @@ class ImageSequenceRenderer(object):
             self.image_figure.set_title('Completed!')  # TODO better way to show it has completed
             plt.draw()
             return
-        self.image = self.seq.next_image()
+        self.image, self.image2 = self.seq.next_image()
         if self.image is not None:
             self.image_plot.set_data(self.image)
 
             self.image_figure.set_title(getattr(self.seq, 'title', "Dinic"))
             self.text_figure.set_title(getattr(self.seq, 'aux_text', ""))
+
+            self.init_plot.set_data(self.image2)
             plt.draw()
 
 

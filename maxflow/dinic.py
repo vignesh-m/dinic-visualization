@@ -92,6 +92,7 @@ class DinicImageSequence(ImageSequence):
 
     def next_image(self):
         self.aux_text = 'Current flow : %d' % self.current_flow
+        flow_graph_image = graph_image(self.graph, capacities=self.graph_capacity_adj, source=self.sink, sink=self.source)
         if self.status == 1:
             print 'in blocking flow'
             self.title = "in blocking flow"
@@ -101,13 +102,13 @@ class DinicImageSequence(ImageSequence):
                 self.title = "Blocking Flow Complete"
                 return graph_image(self.blocking_flow.block_flow,
                                    capacities=self.blocking_flow.adj_matrix_capacitites,
-                                   source=self.source, sink=self.sink)
+                                   source=self.source, sink=self.sink), flow_graph_image
 
             _next = self.blocking_flow.next_image()
 
             self.current_flow += self.blocking_flow.current_flow
             self.aux_text = 'Current flow : %d' % self.current_flow
-            return _next
+            return _next, flow_graph_image
         else:
             self.find_residual()
             self.dist = find_distances(self.residual_graph, self.source)
@@ -118,7 +119,7 @@ class DinicImageSequence(ImageSequence):
                 self.done = True
                 print 'completed dinics'
                 self.title = 'Completed!'
-                return graph_image(self.graph, highlight_path=None, capacities=self.graph_capacity_adj, source=self.source, sink=self.sink)
+                return graph_image(self.graph, highlight_path=None, capacities=self.graph_capacity_adj, source=self.source, sink=self.sink), flow_graph_image
             else:
                 # find blocking flow
                 print 'Finding Blocking Flow'
@@ -132,7 +133,7 @@ class DinicImageSequence(ImageSequence):
                 self.update_flow()
 
                 self.aux_text = 'Current flow : %d' % self.current_flow
-                return image
+                return image, flow_graph_image
 
     def complete(self):
         return self.done
